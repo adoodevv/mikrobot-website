@@ -96,10 +96,10 @@ export function Footer() {
                <div>
                   <h3 className="text-sm font-semibold mb-4">Contact</h3>
                   <address className="not-italic">
-                     <p className="text-sm text-gray-600">123 Tech Avenue</p>
-                     <p className="text-sm text-gray-600">Innovation City, IC 10001</p>
+                     <p className="text-sm text-gray-600">Augustino Neto Rd, Council Close,</p>
+                     <p className="text-sm text-gray-600">Airport Residential Area, Accra, Ghana.</p>
                      <p className="text-sm text-gray-600 mt-4">info@mikrobotacademy.com</p>
-                     <p className="text-sm text-gray-600">+1 (555) 123-4567</p>
+                     <p className="text-sm text-gray-600">+233 24 763 2002</p>
                   </address>
                   <Button className="mt-4" size="sm">
                      Contact Us
