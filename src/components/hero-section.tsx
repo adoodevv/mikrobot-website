@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 const HeroSection = () => {
    return (
-      <section className="pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden">
+      <section className="relative min-h-screen pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden">
          <div className="container mx-auto px-4 sm:px-6">
             <div className="flex flex-col md:flex-row items-center">
                <div className="md:w-1/2 md:pr-12 space-y-6">
@@ -48,12 +48,12 @@ const HeroSection = () => {
                transition={{ repeat: Infinity, duration: 2 }}
                className="flex flex-col items-center"
             >
-               <span className="text-white/70 text-sm mb-2">Scroll to explore</span>
-               <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2">
+               <span className="text-black/70 text-sm mb-2">Scroll to explore</span>
+               <div className="w-6 h-10 border-2 border-black/30 rounded-full flex justify-center pt-2">
                   <motion.div
                      animate={{ y: [0, 8, 0] }}
                      transition={{ repeat: Infinity, duration: 1.5 }}
-                     className="w-1.5 h-1.5 bg-white rounded-full"
+                     className="w-1.5 h-1.5 bg-black rounded-full"
                   />
                </div>
             </motion.div>
