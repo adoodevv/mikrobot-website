@@ -86,6 +86,11 @@ export function Footer() {
                         </Link>
                      </li>
                      <li>
+                        <Link href="/blog" className="text-sm text-gray-600 hover:text-gray-900">
+                           Blog
+                        </Link>
+                     </li>
+                     <li>
                         <Link href="/faq" className="text-sm text-gray-600 hover:text-gray-900">
                            FAQ
                         </Link>
@@ -101,8 +106,8 @@ export function Footer() {
                      <p className="text-sm text-gray-600 mt-4">info@mikrobotacademy.com</p>
                      <p className="text-sm text-gray-600">+233 24 763 2002</p>
                   </address>
-                  <Button className="mt-4" size="sm">
-                     Contact Us
+                  <Button className="mt-4" size="sm" asChild>
+                     <Link href="/contact">Contact Us</Link>
                   </Button>
                </div>
             </div>

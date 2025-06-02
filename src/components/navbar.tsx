@@ -11,6 +11,7 @@ import {
    DropdownMenuItem,
    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Image from "next/image";
 
 export function Navbar() {
    const [isOpen, setIsOpen] = useState(false);
@@ -38,10 +39,11 @@ export function Navbar() {
          )}
       >
          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex h-16 items-center justify-between">
+            <div className="flex h-20 items-center justify-between">
                <div className="flex items-center">
-                  <Link href="/" className="text-2xl font-bold tracking-tight">
-                     Mikrobot
+                  <Link href="/" className="flex items-center gap-2 text-2xl font-bold tracking-tight">
+                     <Image src="/logo.png" alt="Mikrobot Academy Logo" width={50} height={50} />
+                     Mikrobot Academy
                   </Link>
                </div>
 
@@ -104,8 +106,8 @@ export function Navbar() {
                   >
                      News
                   </Link>
-                  <Button size="sm" className="ml-4">
-                     Enroll Now
+                  <Button size="sm" className="ml-4" asChild>
+                     <Link href="/enroll">Enroll Now</Link>
                   </Button>
                </nav>
 
@@ -194,8 +196,8 @@ export function Navbar() {
                   >
                      News
                   </Link>
-                  <Button className="w-full mt-4" onClick={() => setIsOpen(false)}>
-                     Enroll Now
+                  <Button className="w-full mt-4" asChild onClick={() => setIsOpen(false)}>
+                     <Link href="/enroll">Enroll Now</Link>
                   </Button>
                </div>
             </div>

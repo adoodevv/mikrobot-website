@@ -4,37 +4,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowUp, ArrowDown } from "lucide-react";
-
-const profiles = [
-   {
-      id: 1,
-      name: "Dr. Ing. Michael Wilson",
-      title: "Lead Robotics Instructor",
-      bio: "Former NASA engineer with 15+ years experience in autonomous systems design.",
-      image: "https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
-   },
-   {
-      id: 2,
-      name: "Mr. Elisha Mensah",
-      title: "Junior Program Director",
-      bio: "Specializes in making complex robotics concepts accessible to young minds.",
-      image: "https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
-   },
-   {
-      id: 3,
-      name: "Mr. Michael Nkema",
-      title: "Senior Student Mentor",
-      bio: "Award-winning Mikrobot graduate now studying AI at MIT.",
-      image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
-   },
-   {
-      id: 4,
-      name: "James Wilson",
-      title: "Competitive Robotics Coach",
-      bio: "Led teams to national championships for three consecutive years.",
-      image: "https://images.unsplash.com/photo-1580675100096-933a150fcdae?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
-   }
-];
+import { featuredProfiles as profiles } from "@/constants/featured-profiles";
+import Link from "next/link";
 
 const ProfilesSection = () => {
    const [currentIndex, setCurrentIndex] = useState(0);
@@ -111,7 +82,9 @@ const ProfilesSection = () => {
             </div>
 
             <div className="mt-12 text-center">
-               <Button variant="outline">View All Profiles</Button>
+               <Link href="/profiles">
+                  <Button variant="outline">View All Profiles</Button>
+               </Link>
             </div>
          </div>
       </section>

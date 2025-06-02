@@ -11,32 +11,32 @@ import { ExternalLink, X } from "lucide-react";
 
 const images = [
    {
-      src: "https://images.pexels.com/photos/2599244/pexels-photo-2599244.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      src: "/images/gallery/team-building.png",
       alt: "Students working on a robot assembly",
       category: "Labs",
       span: "col-span-1 md:col-span-2 row-span-1"
    },
    {
-      src: "https://images.pexels.com/photos/8926645/pexels-photo-8926645.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      alt: "Close-up of robot arm mechanisms",
+      src: "/images/gallery/bambu.jpg",
+      alt: "Close-up of Bambu Lab A1 with AMS Lite",
       category: "Equipment",
       span: "col-span-1 row-span-1"
    },
    {
-      src: "https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      src: "/images/gallery/sumo-usa.png",
       alt: "Competition day presentation",
       category: "Events",
       span: "col-span-1 row-span-1"
    },
    {
-      src: "https://images.pexels.com/photos/8566428/pexels-photo-8566428.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      src: "/images/gallery/junior-teamwork.png",
       alt: "Robotics team working together",
       category: "Teamwork",
       span: "col-span-1 row-span-1 md:row-span-2"
    },
    {
-      src: "https://images.pexels.com/photos/2599244/pexels-photo-2599244.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      alt: "Classroom learning environment",
+      src: "/images/gallery/outreach-training.png",
+      alt: "Outreach at the U.S. Embassy",
       category: "Education",
       span: "col-span-1 md:col-span-2 row-span-1"
    }

@@ -11,7 +11,7 @@ const newsItems = [
       excerpt: "Our senior team's autonomous rescue robot took first place in the national finals, advancing to the international competition.",
       category: "Achievements",
       date: "May 2, 2025",
-      image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+      image: "/images/news/national.png"
    },
    {
       id: 2,
@@ -27,7 +27,7 @@ const newsItems = [
       excerpt: "Secure your child's spot in our popular two-week intensive program designed to spark creativity and technical skills.",
       category: "Events",
       date: "April 15, 2025",
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+      image: "/images/news/tarkwa.png"
    }
 ];
 
@@ -73,7 +73,9 @@ const NewsSection = () => {
             </div>
 
             <div className="mt-12 text-center">
-               <Button>View All News</Button>
+               <Button asChild>
+                  <Link href="/news">View All News</Link>
+               </Button>
             </div>
          </div>
       </section>

@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const HeroSection = () => {
    return (
@@ -19,8 +20,12 @@ const HeroSection = () => {
                      and world-class mentorship.
                   </p>
                   <div className="flex flex-wrap gap-4 pt-4 animate-fade-in" style={{ animationDelay: "0.2s" }}>
-                     <Button className="btn-primary">Explore the Academy</Button>
-                     <Button variant="outline">View Programs</Button>
+                     <Button className="btn-primary" asChild>
+                        <Link href="/about">Explore the Academy</Link>
+                     </Button>
+                     <Button variant="outline" asChild>
+                        <Link href="/academy">View Programs</Link>
+                     </Button>
                   </div>
                </div>
                <div className="md:w-1/2 mt-12 md:mt-0 animate-fade-in" style={{ animationDelay: "0.3s" }}>

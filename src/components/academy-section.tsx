@@ -7,51 +7,8 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArrowRight } from "lucide-react";
-
-const programs = [
-   {
-      id: "elementary",
-      title: "Elementary Program",
-      ageRange: "Ages 6-10",
-      description: "A playful introduction to robotics fundamentals through interactive projects designed for young minds. Students learn basic programming concepts while building simple robots.",
-      features: [
-         "Block-based programming languages",
-         "Simple robot construction kits",
-         "Guided discovery learning",
-         "Teamwork and communication skills"
-      ],
-      image: "https://images.pexels.com/photos/8363104/pexels-photo-8363104.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      color: "from-blue-400 to-sky-300"
-   },
-   {
-      id: "junior",
-      title: "Junior Program",
-      ageRange: "Ages 11-14",
-      description: "An intermediate curriculum focused on developing technical skills and computational thinking. Students work on more complex projects involving sensors and automation.",
-      features: [
-         "Text-based programming languages",
-         "Advanced sensor integration",
-         "Problem-solving challenges",
-         "Introduction to AI concepts"
-      ],
-      image: "https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      color: "from-purple-400 to-indigo-400"
-   },
-   {
-      id: "senior",
-      title: "Senior Program",
-      ageRange: "Ages 15-18",
-      description: "A comprehensive program preparing students for industry or academic pursuits in robotics. Covers advanced engineering principles and includes real-world applications.",
-      features: [
-         "Industry-standard programming",
-         "Complex robotics systems",
-         "Independent research projects",
-         "Competition preparation"
-      ],
-      image: "https://images.pexels.com/photos/8386434/pexels-photo-8386434.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      color: "from-emerald-400 to-green-300"
-   }
-];
+import Link from "next/link";
+import { programs } from "@/constants/programs";
 
 export function AcademySection() {
    const [activeTab, setActiveTab] = useState("junior");
@@ -73,9 +30,9 @@ export function AcademySection() {
                className="w-full"
             >
                <div className="flex justify-center mb-12">
-                  <TabsList className="grid w-full max-w-md grid-cols-3">
+                  <TabsList className="grid w-full max-w-md mx-auto grid-cols-3">
                      {programs.map((program) => (
-                        <TabsTrigger key={program.id} value={program.id} className="text-sm md:text-base">
+                        <TabsTrigger key={program.id} value={program.id}>
                            {program.id.charAt(0).toUpperCase() + program.id.slice(1)}
                         </TabsTrigger>
                      ))}
@@ -110,9 +67,11 @@ export function AcademySection() {
                                  ))}
                               </ul>
 
-                              <Button className="mt-6 group">
-                                 Learn More
-                                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                              <Button className="mt-6 group" asChild>
+                                 <Link href={`/academy/${program.id}`}>
+                                    Learn More
+                                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                                 </Link>
                               </Button>
                            </div>
                         </div>
