@@ -62,9 +62,9 @@ const ProfilesSection = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                {visibleProfiles.map((profile) => (
-                  <Card key={profile.id} className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                  <div key={profile.id} className="rounded-xl cursor-pointer group shadow-md transition-shadow overflow-hidden">
                      <CardContent className="p-0 overflow-hidden">
-                        <div className="aspect-[4/3] overflow-hidden">
+                        <div className="aspect-[16/9] overflow-hidden">
                            <img
                               src={profile.image}
                               alt={profile.name}
@@ -77,7 +77,7 @@ const ProfilesSection = () => {
                            <p className="text-muted-foreground">{profile.bio}</p>
                         </div>
                      </CardContent>
-                  </Card>
+                  </div>
                ))}
             </div>
 

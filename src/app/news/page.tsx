@@ -83,7 +83,7 @@ const News = () => {
                </p>
             </div>
          </div>
-         <section className="flex-grow py-16">
+         <section className="flex-grow pb-16">
             <div className="container mx-auto px-4 sm:px-6">
                <div className="max-w-md mx-auto mb-12">
                   <div className="relative">

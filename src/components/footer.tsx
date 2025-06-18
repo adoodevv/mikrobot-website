@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Facebook, Instagram, Twitter, Linkedin, Youtube } from "lucide-react";
+import Image from "next/image";
 
 export function Footer() {
    return (
@@ -8,7 +9,10 @@ export function Footer() {
          <div className="container mx-auto px-4 py-12 md:py-16">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                <div className="space-y-4">
-                  <h3 className="text-lg font-bold">Mikrobot Academy</h3>
+                  <Link href="/" className="flex items-center gap-2 text-sm font-bold tracking-tight">
+                     <Image src="/logo.png" alt="Mikrobot Academy Logo" width={40} height={40} />
+                     Mikrobot Academy
+                  </Link>
                   <p className="text-sm text-gray-600 max-w-xs">
                      Building the future, one robot at a time. Premium robotics education for all ages.
                   </p>

@@ -58,7 +58,6 @@ export function GallerySection() {
                <Button variant="outline" className="mt-4 md:mt-0 group" asChild>
                   <Link href="/gallery">
                      View Full Gallery
-                     <ExternalLink className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Link>
                </Button>
             </div>

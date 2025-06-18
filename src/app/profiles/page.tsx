@@ -18,7 +18,7 @@ const Profiles = () => {
                </p>
             </div>
          </div>
-         <section className="flex-grow py-16">
+         <section className="flex-grow pb-16">
             <div className="container mx-auto px-4 sm:px-6">
                <Tabs defaultValue="students" className="w-full">
                   <TabsList className="grid w-full max-w-md mx-auto grid-cols-3 mb-12">

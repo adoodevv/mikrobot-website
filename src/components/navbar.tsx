@@ -41,8 +41,8 @@ export function Navbar() {
          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex h-20 items-center justify-between">
                <div className="flex items-center">
-                  <Link href="/" className="flex items-center gap-2 text-2xl font-bold tracking-tight">
-                     <Image src="/logo.png" alt="Mikrobot Academy Logo" width={50} height={50} />
+                  <Link href="/" className="flex items-center gap-2 text-lg md:text-xl font-bold tracking-tight">
+                     <Image src="/logo.png" alt="Mikrobot Academy Logo" width={40} height={40} />
                      Mikrobot Academy
                   </Link>
                </div>

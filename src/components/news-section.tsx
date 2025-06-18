@@ -1,7 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ExternalLink } from "lucide-react";
 import Link from "next/link";
 
 const newsItems = [
@@ -44,31 +42,28 @@ const NewsSection = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                {newsItems.map((news) => (
-                  <Card key={news.id} className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                     <CardContent className="p-0">
-                        <div className="aspect-[16/9] overflow-hidden">
-                           <img
-                              src={news.image}
-                              alt={news.title}
-                              className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                           />
+                  <div key={news.id} className="rounded-xl cursor-pointer group shadow-md transition-shadow overflow-hidden">
+                     <div className="aspect-[16/9] overflow-hidden">
+                        <img
+                           src={news.image}
+                           alt={news.title}
+                           className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                        />
+                     </div>
+                     <div className="p-6">
+                        <div className="flex items-center justify-between mb-3">
+                           <Badge variant="secondary">{news.category}</Badge>
+                           <span className="text-xs text-muted-foreground">{news.date}</span>
                         </div>
-                        <div className="px-6 pt-4">
-                           <div className="flex items-center justify-between mb-3">
-                              <Badge variant="secondary">{news.category}</Badge>
-                              <span className="text-xs text-muted-foreground">{news.date}</span>
-                           </div>
-                           <h3 className="font-bold text-xl mb-3 line-clamp-2">{news.title}</h3>
-                           <p className="text-muted-foreground mb-4 line-clamp-3">{news.excerpt}</p>
-                           <Button variant="outline" size="sm" className="w-full group" asChild>
-                              <Link href={`/news`}>
-                                 Read More
-                                 <ExternalLink className="ml-2 h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-                              </Link>
-                           </Button>
-                        </div>
-                     </CardContent>
-                  </Card>
+                        <h3 className="font-bold text-xl mb-3 line-clamp-2">{news.title}</h3>
+                        <p className="text-muted-foreground mb-4 line-clamp-3">{news.excerpt}</p>
+                        <Button variant="outline" size="sm" className="w-full" asChild>
+                           <Link href={`/news`}>
+                              Read More
+                           </Link>
+                        </Button>
+                     </div>
+                  </div>
                ))}
             </div>
 
