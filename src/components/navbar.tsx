@@ -1,207 +1,108 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
-import { Menu, X, ChevronDown } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-   DropdownMenu,
-   DropdownMenuContent,
-   DropdownMenuItem,
-   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import Image from "next/image";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
+
+const NAV_LINKS = [
+   { href: "/", label: "Home" },
+   { href: "/about", label: "About" },
+   { href: "/programs", label: "Programs" },
+   { href: "/gallery", label: "Gallery" },
+   { href: "/contact", label: "Contact" },
+   { href: "/news", label: "News & Blog" },
+];
 
 export function Navbar() {
-   const [isOpen, setIsOpen] = useState(false);
-   const [scrolled, setScrolled] = useState(false);
-
-   useEffect(() => {
-      const handleScroll = () => {
-         const offset = window.scrollY;
-         setScrolled(offset > 50);
-      };
-
-      window.addEventListener("scroll", handleScroll);
-      return () => {
-         window.removeEventListener("scroll", handleScroll);
-      };
-   }, []);
+   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
    return (
-      <header
-         className={cn(
-            "fixed top-0 w-full z-50 transition-all duration-300",
-            scrolled
-               ? "bg-white/90 backdrop-blur-md shadow-sm"
-               : "bg-transparent"
-         )}
-      >
-         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex h-20 items-center justify-between">
-               <div className="flex items-center">
-                  <Link href="/" className="flex items-center gap-2 text-lg md:text-xl font-bold tracking-tight">
-                     <Image src="/logo.png" alt="Mikrobot Academy Logo" width={40} height={40} />
-                     Mikrobot Academy
-                  </Link>
-               </div>
+      <header className="fixed top-0 w-full z-50 py-4 bg-white/70 backdrop-blur-md border-b border-gray-100/50">
+         <div className="container mx-auto px-4 md:px-6">
+            <div className="flex items-center justify-between">
+               {/* Logo */}
+               <Link href="/" className="flex items-center gap-2 z-50 relative">
+                  <Image src="/logo.png" alt="Mikrobot Academy Logo" width={40} height={40} />
+                  <h1 className="font-bold text-xl text-slate-800 hidden sm:block">Mikrobot Academy</h1>
+               </Link>
 
                {/* Desktop Navigation */}
-               <nav className="hidden md:flex items-center space-x-8">
-                  <Link
-                     href="/"
-                     className="text-sm font-medium transition-colors hover:text-primary"
-                  >
-                     Home
-                  </Link>
-                  <Link
-                     href="/about"
-                     className="text-sm font-medium transition-colors hover:text-primary"
-                  >
-                     About
-                  </Link>
-                  <DropdownMenu>
-                     <DropdownMenuTrigger asChild>
-                        <Button
-                           variant="link"
-                           className="text-sm font-medium p-0 h-auto transition-colors hover:text-primary"
-                        >
-                           Academy <ChevronDown className="h-4 w-4 ml-1" />
-                        </Button>
-                     </DropdownMenuTrigger>
-                     <DropdownMenuContent align="center" className="w-48">
-                        <DropdownMenuItem asChild>
-                           <Link href="/academy/elementary" className="w-full">
-                              Elementary
-                           </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                           <Link href="/academy/junior" className="w-full">
-                              Junior
-                           </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                           <Link href="/academy/senior" className="w-full">
-                              Senior
-                           </Link>
-                        </DropdownMenuItem>
-                     </DropdownMenuContent>
-                  </DropdownMenu>
-                  <Link
-                     href="/profiles"
-                     className="text-sm font-medium transition-colors hover:text-primary"
-                  >
-                     Profiles
-                  </Link>
-                  <Link
-                     href="/gallery"
-                     className="text-sm font-medium transition-colors hover:text-primary"
-                  >
-                     Gallery
-                  </Link>
-                  <Link
-                     href="/news"
-                     className="text-sm font-medium transition-colors hover:text-primary"
-                  >
-                     News
-                  </Link>
-                  <Button size="sm" className="ml-4" asChild>
-                     <Link href="/enroll">Enroll Now</Link>
-                  </Button>
+               <nav className="hidden md:flex items-center gap-2" onMouseLeave={() => setHoveredIndex(null)}>
+                  {NAV_LINKS.map((link, index) => (
+                     <Link
+                        key={link.href}
+                        href={link.href}
+                        className="relative px-4 py-2 text-sm font-medium text-slate-600 transition-colors hover:text-slate-900"
+                        onMouseEnter={() => setHoveredIndex(index)}
+                     >
+                        {hoveredIndex === index && (
+                           <motion.span
+                              className="absolute inset-0 rounded-lg bg-slate-100 -z-10"
+                              layoutId="navbar-hover"
+                              transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                           />
+                        )}
+                        {link.label}
+                     </Link>
+                  ))}
                </nav>
 
-               {/* Mobile Navigation Toggle */}
-               <div className="flex md:hidden">
-                  <Button
-                     variant="ghost"
-                     size="icon"
-                     onClick={() => setIsOpen(!isOpen)}
-                     aria-label="Toggle Menu"
-                  >
-                     {isOpen ? (
-                        <X className="h-6 w-6" />
-                     ) : (
-                        <Menu className="h-6 w-6" />
-                     )}
-                  </Button>
+               {/* Right Side Actions */}
+               <div className="hidden md:flex items-center gap-4">
+                  <Link href="/enroll">
+                     <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="rounded-md bg-sky-900 text-white px-6 py-2.5 text-sm font-medium shadow-md hover:bg-sky-800 transition-colors"
+                     >
+                        Enroll Now
+                     </motion.button>
+                  </Link>
                </div>
+
+               {/* Mobile Toggle */}
+               <button
+                  className="md:hidden z-50 p-2 text-slate-600"
+                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+               >
+                  {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+               </button>
             </div>
          </div>
 
-         {/* Mobile Navigation Menu */}
-         {isOpen && (
-            <div className="md:hidden bg-white border-t">
-               <div className="container mx-auto px-4 py-4 space-y-4">
-                  <Link
-                     href="/"
-                     className="block py-2 text-sm font-medium hover:text-primary"
-                     onClick={() => setIsOpen(false)}
-                  >
-                     Home
-                  </Link>
-                  <Link
-                     href="/about"
-                     className="block py-2 text-sm font-medium hover:text-primary"
-                     onClick={() => setIsOpen(false)}
-                  >
-                     About
-                  </Link>
-                  <div className="py-2">
-                     <div className="flex items-center text-sm font-medium">
-                        Academy
-                     </div>
-                     <div className="pl-4 mt-2 space-y-2">
+         {/* Mobile Menu Overlay */}
+         <AnimatePresence>
+            {isMobileMenuOpen && (
+               <motion.div
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.2 }}
+                  className="fixed inset-0 top-0 z-40 h-screen bg-white/95 backdrop-blur-xl pt-24 px-6 md:hidden flex flex-col gap-8"
+               >
+                  <nav className="flex flex-col gap-6 items-center text-center">
+                     {NAV_LINKS.map((link) => (
                         <Link
-                           href="/academy/elementary"
-                           className="block py-1 text-sm hover:text-primary"
-                           onClick={() => setIsOpen(false)}
+                           key={link.href}
+                           href={link.href}
+                           onClick={() => setIsMobileMenuOpen(false)}
+                           className="text-2xl font-medium text-slate-800 hover:text-sky-600 transition-colors"
                         >
-                           Elementary
+                           {link.label}
                         </Link>
-                        <Link
-                           href="/academy/junior"
-                           className="block py-1 text-sm hover:text-primary"
-                           onClick={() => setIsOpen(false)}
-                        >
-                           Junior
-                        </Link>
-                        <Link
-                           href="/academy/senior"
-                           className="block py-1 text-sm hover:text-primary"
-                           onClick={() => setIsOpen(false)}
-                        >
-                           Senior
-                        </Link>
-                     </div>
-                  </div>
-                  <Link
-                     href="/profiles"
-                     className="block py-2 text-sm font-medium hover:text-primary"
-                     onClick={() => setIsOpen(false)}
-                  >
-                     Profiles
-                  </Link>
-                  <Link
-                     href="/gallery"
-                     className="block py-2 text-sm font-medium hover:text-primary"
-                     onClick={() => setIsOpen(false)}
-                  >
-                     Gallery
-                  </Link>
-                  <Link
-                     href="/news"
-                     className="block py-2 text-sm font-medium hover:text-primary"
-                     onClick={() => setIsOpen(false)}
-                  >
-                     News
-                  </Link>
-                  <Button className="w-full mt-4" asChild onClick={() => setIsOpen(false)}>
-                     <Link href="/enroll">Enroll Now</Link>
-                  </Button>
-               </div>
-            </div>
-         )}
+                     ))}
+                     <Link href="/enroll" onClick={() => setIsMobileMenuOpen(false)} className="mt-4">
+                        <button className="rounded-full bg-sky-900 text-white px-8 py-3 text-lg font-medium shadow-lg w-full">
+                           Enroll Now
+                        </button>
+                     </Link>
+                  </nav>
+               </motion.div>
+            )}
+         </AnimatePresence>
       </header>
    );
 }
