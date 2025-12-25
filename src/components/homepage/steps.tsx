@@ -15,7 +15,7 @@ const steps = [
          { text: "Browse", href: "/programs", variant: "outline" },
          { text: "Explore", href: "/enroll", variant: "link" }
       ],
-      image: "/people/caleb.jpg",
+      image: "/students/eddy.jpg",
    },
    {
       number: "02",
@@ -36,15 +36,16 @@ const steps = [
       description: "Test what you've learnt against other innovators. Win recognition. Build confidence. Prepare for whatever comes next in your technical career.",
       buttons: [
          { text: "Apply", href: "/enroll", variant: "outline" },
+         { text: "Compete", href: "/programs", variant: "link" },
       ],
-      image: "/students/afia.jpeg",
+      image: "/compete.jpg",
    },
 ];
 
-export function Steps() {
+const Steps = () => {
    return (
       <section className="py-24 bg-white border-t border-slate-100">
-         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+         <div className="container mx-auto px-4 sm:px-6">
             <div className="flex flex-col gap-32">
                {steps.map((step, index) => (
                   <div key={index} className="flex flex-col gap-12">
@@ -72,8 +73,8 @@ export function Steps() {
                                     key={i}
                                     href={btn.href}
                                     className={`inline-flex items-center text-sm font-semibold transition-colors ${btn.variant === "outline"
-                                          ? "px-6 py-3 rounded-md border border-slate-200 text-slate-900 hover:bg-slate-50 hover:border-slate-300"
-                                          : "text-slate-900 hover:text-sky-700 group"
+                                       ? "px-8 py-3.5 rounded-md border border-slate-200 text-slate-900 hover:bg-slate-50 hover:border-slate-300"
+                                       : "text-slate-900 group"
                                        }`}
                                  >
                                     {btn.text}
@@ -101,3 +102,5 @@ export function Steps() {
       </section>
    );
 }
+
+export default Steps;

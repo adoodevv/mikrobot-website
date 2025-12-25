@@ -3,6 +3,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const Hero = () => {
    return (
@@ -54,12 +55,16 @@ const Hero = () => {
                            transition={{ delay: 0.7, duration: 0.8 }}
                            className="flex flex-col sm:flex-row justify-center gap-4 pt-4"
                         >
-                           <button className="rounded-md text-black bg-white px-8 py-4 text-base shadow-lg hover:bg-sky-400 hover:scale-105 transition-all duration-300">
-                              Explore Programs
-                           </button>
-                           <button className="rounded-md bg-white/10 backdrop-blur-md text-white px-8 py-4 text-base ring-1 ring-white/50 hover:bg-white/20 hover:scale-105 transition-all duration-300">
-                              Learn More
-                           </button>
+                           <Link href="/programs">
+                              <button className="rounded-md text-white bg-sky-900 px-8 py-3.5 text-base font-medium shadow-lg hover:bg-sky-800 transition-all duration-300">
+                                 Explore Programs
+                              </button>
+                           </Link>
+                           <Link href="/about">
+                              <button className="rounded-md bg-white/10 backdrop-blur-md text-white px-8 py-3.5 text-base font-medium border border-white/30 hover:bg-white/20 transition-all duration-300">
+                                 Learn More
+                              </button>
+                           </Link>
                         </motion.div>
                      </div>
                   </div>

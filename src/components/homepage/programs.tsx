@@ -35,13 +35,13 @@ const programs = [
    },
 ];
 
-export function Programs() {
+const Programs = () => {
    return (
       <section className="py-24 bg-white">
          <div className="container mx-auto px-4 sm:px-6">
             <div className="text-center mb-16 space-y-4">
-               <h3 className="text-sm font-semibold tracking-wider uppercase text-slate-500">Programs</h3>
-               <h2 className="text-4xl md:text-5xl font-semibold text-slate-900 tracking-tight">Three paths to mastery</h2>
+               <h3 className="text-sm font-semibold tracking-wider uppercase">Programs</h3>
+               <h2 className="text-4xl md:text-5xl font-medium text-slate-900 tracking-tight">Three paths to mastery</h2>
                <p className="text-lg text-slate-600 max-w-2xl mx-auto">
                   Each program builds foundational skills progressively, guiding students from curiosity to expertise.
                </p>
@@ -58,7 +58,7 @@ export function Programs() {
                      className={`group relative overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm hover:shadow-xl transition-all duration-300 ${program.large ? "lg:col-span-2 lg:flex lg:flex-row" : "flex flex-col"
                         }`}
                   >
-                     <div className={`p-8 md:p-10 flex flex-col justify-center items-start space-y-4 max-w-xl ${program.large && "lg:w-1/2"}`}>
+                     <div className={`p-8 md:p-10 flex flex-col justify-center items-start space-y-4 max-w-xl ${program.large ? "lg:w-1/2" : "flex-1"}`}>
                         <span className="text-sm font-semibold text-slate-900">{program.level}</span>
                         <h3 className="text-3xl font-semibold text-slate-900 leading-tight">{program.title}</h3>
                         <p className="text-slate-600 leading-relaxed">
@@ -88,3 +88,5 @@ export function Programs() {
       </section>
    );
 }
+
+export default Programs;

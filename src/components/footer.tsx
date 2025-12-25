@@ -1,137 +1,140 @@
+"use client";
+
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Facebook, Instagram, Twitter, Linkedin, Youtube } from "lucide-react";
+import { RiFacebookFill, RiInstagramFill, RiTwitterXFill, RiLinkedinFill, RiYoutubeFill } from "react-icons/ri";
 import Image from "next/image";
 
 export function Footer() {
+   const navigation = {
+      column1: [
+         { name: "Home", href: "/" },
+         { name: "Programs", href: "/programs" },
+         { name: "Elementary", href: "/programs/elementary" },
+         { name: "Junior", href: "/programs/junior" },
+         { name: "Senior", href: "/programs/senior" },
+      ],
+      column2: [
+         { name: "Gallery", href: "/gallery" },
+         { name: "Updates", href: "/news" },
+         { name: "About", href: "/about" },
+         { name: "Support", href: "/contact" },
+         { name: "Careers", href: "/careers" },
+      ],
+   };
+
+   const avatars = [
+      "/people/bright.jpeg",
+      "/people/caleb.jpg",
+      "/people/haqq.jpeg",
+      "/people/jonathan.jpg",
+      "/people/nkema.jpg",
+      "/people/seth.jpg"
+   ];
+
    return (
-      <footer className="bg-gray-50 border-t">
-         <div className="container mx-auto px-4 py-12 md:py-16">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-               <div className="space-y-4">
-                  <Link href="/" className="flex items-center gap-2 text-sm font-bold tracking-tight">
-                     <Image src="/logo.png" alt="Mikrobot Academy Logo" width={40} height={40} />
-                     Mikrobot Academy
-                  </Link>
-                  <p className="text-sm text-gray-600 max-w-xs">
-                     Building the future, one robot at a time. Premium robotics education for all ages.
+      <footer className="bg-white py-20 border-t border-slate-100">
+         <div className="container mx-auto px-4 sm:px-6">
+            <div className="flex flex-col lg:flex-row justify-between gap-16 lg:gap-24 mb-24">
+               {/* Left Section - CTA */}
+               <div className="lg:max-w-xl space-y-8">
+                  <h2 className="text-5xl sm:text-6xl md:text-7xl font-medium text-slate-900 tracking-tight leading-[1.1]">
+                     Build the future <br /> with robotics
+                  </h2>
+                  <p className="text-lg text-slate-600 max-w-lg">
+                     Join Mikrobot Academy and discover your potential in robotics education today
                   </p>
-                  <div className="flex space-x-4">
-                     <Button variant="ghost" size="icon" asChild>
-                        <Link href="#" aria-label="Facebook">
-                           <Facebook className="h-5 w-5" />
-                        </Link>
-                     </Button>
-                     <Button variant="ghost" size="icon" asChild>
-                        <Link href="#" aria-label="Instagram">
-                           <Instagram className="h-5 w-5" />
-                        </Link>
-                     </Button>
-                     <Button variant="ghost" size="icon" asChild>
-                        <Link href="#" aria-label="Twitter">
-                           <Twitter className="h-5 w-5" />
-                        </Link>
-                     </Button>
-                     <Button variant="ghost" size="icon" asChild>
-                        <Link href="#" aria-label="LinkedIn">
-                           <Linkedin className="h-5 w-5" />
-                        </Link>
-                     </Button>
-                     <Button variant="ghost" size="icon" asChild>
-                        <Link href="#" aria-label="YouTube">
-                           <Youtube className="h-5 w-5" />
-                        </Link>
-                     </Button>
+                  <div className="flex items-center gap-4 pt-4">
+                     <Link
+                        href="/programs"
+                        className="px-8 py-3.5 bg-sky-900 text-white font-medium rounded-md hover:bg-blue-600 transition-colors"
+                     >
+                        Explore
+                     </Link>
+                     <Link
+                        href="/contact"
+                        className="px-8 py-3.5 bg-white border border-slate-200 text-slate-900 font-medium rounded-md hover:bg-slate-50 transition-colors"
+                     >
+                        Contact
+                     </Link>
                   </div>
                </div>
 
-               <div>
-                  <h3 className="text-sm font-semibold mb-4">Programs</h3>
-                  <ul className="space-y-3">
-                     <li>
-                        <Link href="/academy/elementary" className="text-sm text-gray-600 hover:text-gray-900">
-                           Elementary Program
+               {/* Right Section - Navigation */}
+               <div className="flex gap-16 sm:gap-32 lg:pt-4">
+                  <div className="flex flex-col gap-4">
+                     {navigation.column1.map((item) => (
+                        <Link
+                           key={item.name}
+                           href={item.href}
+                           className="text-slate-900 font-semibold hover:underline"
+                        >
+                           {item.name}
                         </Link>
-                     </li>
-                     <li>
-                        <Link href="/academy/junior" className="text-sm text-gray-600 hover:text-gray-900">
-                           Junior Program
+                     ))}
+                  </div>
+                  <div className="flex flex-col gap-4">
+                     {navigation.column2.map((item) => (
+                        <Link
+                           key={item.name}
+                           href={item.href}
+                           className="text-slate-900 font-semibold hover:underline"
+                        >
+                           {item.name}
                         </Link>
-                     </li>
-                     <li>
-                        <Link href="/academy/senior" className="text-sm text-gray-600 hover:text-gray-900">
-                           Senior Program
-                        </Link>
-                     </li>
-                     <li>
-                        <Link href="/custom" className="text-sm text-gray-600 hover:text-gray-900">
-                           Custom Programs
-                        </Link>
-                     </li>
-                  </ul>
-               </div>
-
-               <div>
-                  <h3 className="text-sm font-semibold mb-4">Resources</h3>
-                  <ul className="space-y-3">
-                     <li>
-                        <Link href="/gallery" className="text-sm text-gray-600 hover:text-gray-900">
-                           Gallery
-                        </Link>
-                     </li>
-                     <li>
-                        <Link href="/profiles" className="text-sm text-gray-600 hover:text-gray-900">
-                           Student Profiles
-                        </Link>
-                     </li>
-                     <li>
-                        <Link href="/news" className="text-sm text-gray-600 hover:text-gray-900">
-                           News & Events
-                        </Link>
-                     </li>
-                     <li>
-                        <Link href="/blog" className="text-sm text-gray-600 hover:text-gray-900">
-                           Blog
-                        </Link>
-                     </li>
-                     <li>
-                        <Link href="/faq" className="text-sm text-gray-600 hover:text-gray-900">
-                           FAQ
-                        </Link>
-                     </li>
-                  </ul>
-               </div>
-
-               <div>
-                  <h3 className="text-sm font-semibold mb-4">Contact</h3>
-                  <address className="not-italic">
-                     <p className="text-sm text-gray-600">Augustino Neto Rd, Council Close,</p>
-                     <p className="text-sm text-gray-600">Airport Residential Area, Accra, Ghana.</p>
-                     <p className="text-sm text-gray-600 mt-4">info@mikrobotacademy.com</p>
-                     <p className="text-sm text-gray-600">+233 24 763 2002</p>
-                  </address>
-                  <Button className="mt-4" size="sm" asChild>
-                     <Link href="/contact">Contact Us</Link>
-                  </Button>
+                     ))}
+                  </div>
                </div>
             </div>
 
-            <div className="mt-12 pt-8 border-t border-gray-200">
-               <div className="flex flex-col md:flex-row justify-between items-center">
-                  <p className="text-sm text-gray-500">
-                     © {new Date().getFullYear()} Mikrobot Academy. All rights reserved.
-                  </p>
-                  <div className="flex space-x-6 mt-4 md:mt-0">
-                     <Link href="/privacy" className="text-xs text-gray-500 hover:text-gray-900">
-                        Privacy Policy
-                     </Link>
-                     <Link href="/terms" className="text-xs text-gray-500 hover:text-gray-900">
-                        Terms of Service
-                     </Link>
-                     <Link href="/cookies" className="text-xs text-gray-500 hover:text-gray-900">
-                        Cookie Policy
-                     </Link>
-                  </div>
+            {/* Middle Section - Logo & Avatars */}
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-8 mb-12">
+               {/* Logo Placeholder */}
+               <div className="relative">
+                  <Link href="/" className="flex items-center gap-2 z-50 relative">
+                     <Image src="/logo.png" alt="Mikrobot Academy Logo" width={60} height={60} />
+                     <h1 className="font-bold text-xl text-slate-800">Mikrobot Academy</h1>
+                  </Link>
+               </div>
+
+               {/* Avatars */}
+               <div className="flex -space-x-4">
+                  {avatars.slice(0, 5).map((src, i) => (
+                     <div
+                        key={i}
+                        className="relative w-12 h-12 rounded-full border-2 border-white overflow-hidden bg-slate-200"
+                     >
+                        <Image
+                           src={src}
+                           alt={`Student ${i + 1}`}
+                           fill
+                           className="object-cover"
+                        />
+                     </div>
+                  ))}
+               </div>
+            </div>
+
+            {/* Bottom Section - Copyright & Socials */}
+            <div className="pt-8 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-6">
+               <p className="text-sm text-slate-500">
+                  © {new Date().getFullYear()} Mikrobot Academy. All rights reserved.
+               </p>
+               <div className="flex items-center gap-6">
+                  <Link href="#" className="hover:scale-105 transition-transform duration-300" aria-label="Facebook">
+                     <RiFacebookFill className="w-6 h-6" />
+                  </Link>
+                  <Link href="#" className="hover:scale-105 transition-transform duration-300" aria-label="Instagram">
+                     <RiInstagramFill className="w-6 h-6" />
+                  </Link>
+                  <Link href="#" className="hover:scale-105 transition-transform duration-300" aria-label="X (Twitter)">
+                     <RiTwitterXFill className="w-6 h-6" />
+                  </Link>
+                  <Link href="#" className="hover:scale-105 transition-transform duration-300" aria-label="LinkedIn">
+                     <RiLinkedinFill className="w-6 h-6" />
+                  </Link>
+                  <Link href="#" className="hover:scale-105 transition-transform duration-300" aria-label="YouTube">
+                     <RiYoutubeFill className="w-6 h-6" />
+                  </Link>
                </div>
             </div>
          </div>
