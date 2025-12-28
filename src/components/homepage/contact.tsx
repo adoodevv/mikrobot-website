@@ -9,8 +9,8 @@ const Contact = () => {
             icon: <Mail className="w-8 h-8" />,
             title: "Email",
             description: "Send us a message anytime during business hours",
-            action: "hello@mikrobotacademy.com",
-            href: "mailto:hello@mikrobotacademy.com",
+            action: "operations@mikrobotacademy.com",
+            href: "mailto:operations@mikrobotacademy.com",
         },
         {
             icon: <Phone className="w-8 h-8" />,

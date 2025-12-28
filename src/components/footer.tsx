@@ -46,7 +46,7 @@ export function Footer() {
                   <div className="flex items-center gap-4 pt-4">
                      <Link
                         href="/programs"
-                        className="px-8 py-3.5 bg-sky-900 text-white font-medium rounded-md hover:bg-blue-600 transition-colors"
+                        className="px-8 py-3.5 bg-sky-900 text-white font-medium rounded-md hover:bg-sky-800 transition-colors"
                      >
                         Explore
                      </Link>
