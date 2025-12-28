@@ -1,18 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { X } from "lucide-react";
 
 const images = [
    {
+      src: "/images/gallery/robofest2024.jpeg",
+      alt: "Students working on a robot assembly",
+      category: "Robofest",
+      description: "Junior program students collaborating on building their competition robot"
+   },
+   {
       src: "/images/gallery/team-building.png",
       alt: "Students working on a robot assembly",
-      category: "Labs",
+      category: "Teamwork",
       description: "Junior program students collaborating on building their competition robot"
    },
    {
@@ -44,13 +46,18 @@ const images = [
       alt: "Innovative project showcase",
       category: "Projects",
       description: "Aquarian Smart Labs Presents to you Nzulezu as a smart city 💡"
+   },
+   {
+      src: "/images/gallery/sumo-usa.png",
+      alt: "Sumo Robot Competition",
+      category: "Events",
+      description: "Our students competing at the international level."
    }
 ];
 
-const categories = ["All", "Labs", "Equipment", "Events", "Teamwork", "Education", "Projects"];
+const categories = ["All", "Robofest", "Equipment", "Events", "Teamwork", "Education", "Projects"];
 
 export default function GalleryPage() {
-   const [selectedImage, setSelectedImage] = useState<(typeof images)[0] | null>(null);
    const [activeCategory, setActiveCategory] = useState("All");
 
    const filteredImages = activeCategory === "All"
@@ -58,97 +65,68 @@ export default function GalleryPage() {
       : images.filter(image => image.category === activeCategory);
 
    return (
-      <>
+      <main className="flex flex-col bg-slate-50 min-h-screen">
          {/* Hero Section */}
-         <section className="py-20 bg-gray-50">
+         <section className="pt-32 pb-16 bg-white border-b border-slate-100">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                <div className="max-w-3xl mx-auto text-center">
-                  <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                     Gallery
+                  <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+                     Our <span className="text-sky-700">Gallery</span>
                   </h1>
-                  <p className="text-lg text-gray-600 mb-8">
-                     Explore our world-class facilities, events, and the innovative projects
-                     our students create at Mikrobot Academy.
+                  <p className="text-lg text-slate-600 mb-8 max-w-2xl mx-auto">
+                     Explore our world-class facilities, competitive events, and the innovative projects our students create at Mikrobot Academy.
                   </p>
+
+                  {/* Category Filter */}
                   <div className="flex flex-wrap justify-center gap-2">
                      {categories.map((category) => (
-                        <Button
+                        <button
                            key={category}
-                           variant={activeCategory === category ? "default" : "outline"}
                            onClick={() => setActiveCategory(category)}
-                           className="mb-2"
+                           className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${activeCategory === category
+                              ? "bg-sky-700 text-white shadow-md transform scale-105"
+                              : "bg-white text-slate-600 border border-slate-200 hover:border-sky-700 hover:text-sky-700"
+                              }`}
                         >
                            {category}
-                        </Button>
+                        </button>
                      ))}
                   </div>
                </div>
             </div>
          </section>
 
-         {/* Gallery Grid */}
-         <section className="py-20 bg-white">
+         {/* Gallery Mosaic */}
+         <section className="py-12 md:py-20">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {filteredImages.map((image, index) => (
-                     <motion.div
-                        key={index}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: index * 0.1 }}
-                        viewport={{ once: true }}
-                        className="relative group cursor-pointer"
-                        onClick={() => setSelectedImage(image)}
-                     >
-                        <div className="relative h-64 md:h-72 rounded-lg overflow-hidden">
-                           <div className="absolute inset-0 bg-black/50 opacity-0 group-hover: opacity-100 transition-opacity duration-300 z-10 flex items-center justify-center">
-                              <div className="text-white text-center p-4">
-                                 <Badge className="mb-2">{image.category}</Badge>
-                                 <p className="text-sm">{image.description}</p>
-                              </div>
-                           </div>
+               <motion.div
+                  layout
+                  className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6"
+               >
+                  <AnimatePresence>
+                     {filteredImages.map((image, index) => (
+                        <motion.div
+                           layout
+                           key={image.src}
+                           initial={{ opacity: 0, scale: 0.9 }}
+                           animate={{ opacity: 1, scale: 1 }}
+                           exit={{ opacity: 0, scale: 0.9 }}
+                           transition={{ duration: 0.3 }}
+                           className="break-inside-avoid relative overflow-hidden rounded-2xl bg-slate-200 shadow-sm hover:shadow-lg transition-all duration-300"
+                        >
                            <Image
                               src={image.src}
                               alt={image.alt}
-                              fill
-                              className="object-cover transition-transform duration-500 group-hover:scale-110"
+                              width={800}
+                              height={600}
+                              className="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700"
                            />
-                        </div>
-                     </motion.div>
-                  ))}
-               </div>
+                        </motion.div>
+                     ))}
+                  </AnimatePresence>
+               </motion.div>
             </div>
          </section>
-
-         {/* Image Modal */}
-         <Dialog open={!!selectedImage} onOpenChange={(open) => !open && setSelectedImage(null)}>
-            <DialogContent className="max-w-4xl w-[90%] p-0 overflow-hidden bg-transparent border-none">
-               {selectedImage && (
-                  <div className="relative">
-                     <Button
-                        variant="ghost"
-                        size="icon"
-                        className="absolute top-4 right-4 z-10 bg-black/30 hover:bg-black/50 text-white rounded-full"
-                        onClick={() => setSelectedImage(null)}
-                     >
-                        <X className="h-5 w-5" />
-                     </Button>
-                     <div className="relative h-[80vh]">
-                        <Image
-                           src={selectedImage.src}
-                           alt={selectedImage.alt}
-                           fill
-                           className="object-cover"
-                        />
-                     </div>
-                     <div className="absolute bottom-0 left-0 right-0 bg-black/70 text-white p-4">
-                        <Badge className="mb-2">{selectedImage.category}</Badge>
-                        <p className="text-sm">{selectedImage.description}</p>
-                     </div>
-                  </div>
-               )}
-            </DialogContent>
-         </Dialog>
-      </>
+      </main>
    );
 }

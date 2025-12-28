@@ -1,166 +1,276 @@
-'use client'
-import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+"use client";
 
-// Extended news data
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { format } from "date-fns";
+import { Search, Calendar, User, ArrowRight } from "lucide-react";
+
+// --- Data ---
 const newsItems = [
    {
       id: 1,
       title: "Mikrobot Academy Team Wins National Robotics Championship",
-      excerpt: "Our senior team's autonomous rescue robot took first place in the national finals, advancing to the international competition in Tokyo this fall.",
-      content: "After months of preparation, the Mikrobot Academy senior team emerged victorious at the National Robotics Championship with their innovative autonomous rescue robot. The team's creation demonstrated exceptional obstacle navigation and victim identification capabilities, earning perfect scores from the judges. The win qualifies the team for the International Robotics Olympics in Tokyo this September.",
+      excerpt: "Our junior team's autonomous rescue robot took first place in the national finals, advancing to the international competition in Singapore.",
+      content: "After months of preparation, the Mikrobot Academy junior team emerged victorious at the National Robotics Championship with their innovative autonomous rescue robot. The win qualifies the team for the International Robotics Olympics in Tokyo this September.",
       category: "Achievements",
-      date: "May 2, 2025",
-      author: "Dr. Kwame Oteng-Gyasi",
-      image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+      date: "2025-05-02",
+      author: "Dr. K. Oteng-Gyasi",
+      readTime: "5 min read",
+      image: "/images/news/national.png"
    },
    {
       id: 2,
-      title: "New Advanced AI Curriculum Launches This Fall",
-      excerpt: "We're excited to announce our expanded senior program featuring cutting-edge machine learning and computer vision modules.",
-      content: "Starting this fall, Mikrobot Academy will introduce an expanded curriculum focusing on artificial intelligence applications in robotics. The new modules will cover neural networks, computer vision, and natural language processing, providing students with skills that match current industry demands. The curriculum was developed in partnership with leading AI researchers and includes hands-on projects using the latest technologies.",
-      category: "Curriculum",
-      date: "April 28, 2025",
+      title: "Summer Robotics Camp Registration Now Open",
+      excerpt: "Secure your child's spot in our popular two-week intensive program designed to spark creativity and technical skills.",
+      content: "Registration is now open for Mikrobot Academy's annual Summer Robotics Camp. Early bird discounts are available until June 1st.",
+      category: "Events",
+      date: "2025-04-15",
       author: "Elisha Mensah",
-      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+      readTime: "2 min read",
+      image: "/images/news/tarkwa.png"
    },
    {
       id: 3,
-      title: "Summer Robotics Camp Registration Now Open",
-      excerpt: "Secure your child's spot in our popular two-week intensive program designed to spark creativity and technical skills.",
-      content: "Registration is now open for Mikrobot Academy's annual Summer Robotics Camp. The two-week program offers students ages 8-18 an immersive experience in robotics design, programming, and operation. Camps are divided by age group and skill level to ensure appropriate challenges for all participants. Early bird discounts are available until June 1st, and scholarships are available for qualifying students.",
-      category: "Events",
-      date: "April 15, 2025",
-      author: "Elisha Mensah",
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+      title: "Alumni Spotlight: Haqq Secures Bloomberg Internship",
+      excerpt: "Former student Haqq shares his experience landing a prestigious software engineering internship at Bloomberg last summer.",
+      content: "We are incredibly proud of Haqq, a Mikrobot Academy alumnus, who spent his last summer interning at Bloomberg. This achievement highlights the global opportunities available to our dedicated students.",
+      category: "Alumni",
+      date: "2025-03-15",
+      author: "N. Munagah",
+      readTime: "4 min read",
+      image: "/people/haqq.jpeg"
    },
    {
       id: 4,
-      title: "Alumni Spotlight: Former Student Launches Robotics Startup",
-      excerpt: "2021 graduate Michael Wong secures $2M in funding for his innovative healthcare robotics company.",
-      content: "Mikrobot Academy is proud to celebrate the success of alumnus Michael Wong (Class of 2021), who recently secured $2 million in seed funding for his healthcare robotics startup, AssistTech. The company's first product, a home assistance robot designed for elderly users, builds directly upon the senior project Michael developed during his time at our academy. Michael credits the academy's hands-on approach and industry connections for helping him develop both the technical skills and entrepreneurial mindset needed for his venture.",
-      category: "Alumni",
-      date: "March 8, 2025",
-      author: "Nurul-Haqq Munagah",
-      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-   },
-   {
-      id: 5,
       title: "Elementary Program Expansion Adds Weekend Sessions",
       excerpt: "Due to high demand, we're adding Saturday afternoon sessions for our youngest robotics enthusiasts.",
-      content: "In response to growing interest in early robotics education, Mikrobot Academy is expanding its Elementary program to include weekend sessions. Starting next month, we will offer Saturday morning classes for students ages 6-10. The two-hour sessions will focus on foundational robotics concepts through play-based learning and simple building projects. The expansion comes after our weekday elementary programs reached full capacity with waiting lists.",
+      content: "In response to growing interest, Mikrobot Academy is expanding its Elementary program to include weekend sessions starting next month.",
       category: "Programs",
-      date: "February 25, 2025",
+      date: "2025-02-25",
       author: "Mr. John Awotwi",
-      image: "https://images.unsplash.com/photo-1602526211905-6adc54adb8d2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+      readTime: "2 min read",
+      image: "/images/gallery/junior-teamwork.png"
    }
 ];
 
-const News = () => {
+const categories = ["All", "Achievements", "Curriculum", "Events", "Alumni", "Programs"];
+
+export default function NewsPage() {
+   const [activeCategory, setActiveCategory] = useState("All");
    const [searchQuery, setSearchQuery] = useState("");
 
-   const filteredNews = searchQuery
-      ? newsItems.filter(news =>
-         news.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-         news.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-         news.category.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-      : newsItems;
+   // Filter Logic
+   const filteredNews = newsItems.filter(item => {
+      const matchesCategory = activeCategory === "All" || item.category === activeCategory;
+      const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+         item.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchesCategory && matchesSearch;
+   });
+
+   const featuredArticle = filteredNews[0];
+   const remainingArticles = filteredNews.slice(1);
 
    return (
-      <div className="flex flex-col">
-         <div className="py-28 bg-gray-50">
-            <div className="container mx-auto px-4 sm:px-6 text-center">
-               <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-3">
-                  Latest News
-               </h1>
-               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                  Stay updated with the latest happenings, achievements, and announcements.
-               </p>
-            </div>
-         </div>
-         <section className="flex-grow pb-16">
-            <div className="container mx-auto px-4 sm:px-6">
-               <div className="max-w-md mx-auto mb-12">
-                  <div className="relative">
-                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
-                     <Input
-                        placeholder="Search news..."
-                        className="pl-10"
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                     />
-                  </div>
-               </div>
+      <main className="min-h-screen bg-slate-50">
+         {/* Hero Section */}
+         <section className="pt-32 pb-16 bg-white border-b border-slate-100">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+               <div className="max-w-3xl mx-auto text-center">
+                  <motion.div
+                     initial={{ opacity: 0, y: 20 }}
+                     animate={{ opacity: 1, y: 0 }}
+                     transition={{ duration: 0.6 }}
+                  >
+                     <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+                        Latest <span className="text-sky-700">Updates</span>
+                     </h1>
+                     <p className="text-lg text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+                        Discover the stories shaping the future of robotics at Mikrobot Academy. From student victories to curriculum innovations.
+                     </p>
 
-               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {filteredNews.map((news) => (
-                     <Card key={news.id} className="hover-card border-none overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-                        <CardContent className="p-0">
-                           <div className="aspect-[16/9] overflow-hidden">
+                     {/* Search Bar */}
+                     <div className="max-w-md mx-auto relative group mb-10">
+                        <div className="relative flex items-center bg-slate-50 border border-slate-200 rounded-full focus-within:border-sky-500 focus-within:ring-2 focus-within:ring-sky-100 transition-all duration-300 overflow-hidden">
+                           <Search className="w-5 h-5 text-slate-400 ml-4 flex-shrink-0" />
+                           <input
+                              type="text"
+                              placeholder="Search articles..."
+                              className="w-full bg-transparent border-none focus:ring-0 text-slate-700 placeholder:text-slate-400 py-3 px-3 outline-none"
+                              value={searchQuery}
+                              onChange={(e) => setSearchQuery(e.target.value)}
+                           />
+                        </div>
+                     </div>
+
+                     {/* Category Filter */}
+                     <div className="flex flex-wrap justify-center gap-2">
+                        {categories.map((cat) => (
+                           <button
+                              key={cat}
+                              onClick={() => setActiveCategory(cat)}
+                              className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${activeCategory === cat
+                                 ? "bg-sky-700 text-white shadow-md transform scale-105"
+                                 : "bg-white text-slate-600 border border-slate-200 hover:border-sky-700 hover:text-sky-700"
+                                 }`}
+                           >
+                              {cat}
+                           </button>
+                        ))}
+                     </div>
+                  </motion.div>
+               </div>
+            </div>
+         </section>
+
+         <div className="container mx-auto px-4 sm:px-6 py-16">
+            {filteredNews.length > 0 ? (
+               <>
+                  {/* Featured Article */}
+                  {featuredArticle && activeCategory === "All" && !searchQuery && (
+                     <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mb-16"
+                     >
+                        <div className="group relative bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-xl transition-all duration-300 grid md:grid-cols-2">
+                           <div className="relative h-64 md:h-auto overflow-hidden">
+                              <img
+                                 src={featuredArticle.image}
+                                 alt={featuredArticle.title}
+                                 className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                              />
+                           </div>
+                           <div className="p-8 md:p-12 flex flex-col justify-center">
+                              <div className="flex items-center gap-3 mb-4">
+                                 <span className="inline-block px-3 py-1 rounded-full bg-sky-50 text-sky-700 text-xs font-bold uppercase tracking-wider">
+                                    {featuredArticle.category}
+                                 </span>
+                                 <div className="flex items-center text-slate-400 text-sm">
+                                    <Calendar className="w-4 h-4 mr-1" />
+                                    {format(new Date(featuredArticle.date), "MMMM d, yyyy")}
+                                 </div>
+                              </div>
+                              <h2 className="text-3xl md:text-3xl font-bold text-slate-900 mb-4 leading-tight group-hover:text-sky-700 transition-colors">
+                                 {featuredArticle.title}
+                              </h2>
+                              <p className="text-slate-600 text-lg mb-8 line-clamp-3">
+                                 {featuredArticle.excerpt}
+                              </p>
+                              <div className="flex items-center justify-between mt-auto">
+                                 <div className="flex items-center text-slate-500 text-sm font-medium">
+                                    <User className="w-4 h-4 mr-2" />
+                                    {featuredArticle.author}
+                                 </div>
+                                 <button className="flex items-center text-sky-700 font-semibold group-hover:translate-x-1 transition-transform">
+                                    Read Article <ArrowRight className="ml-2 w-4 h-4" />
+                                 </button>
+                              </div>
+                           </div>
+                        </div>
+                     </motion.div>
+                  )}
+
+                  {/* News Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                     {(activeCategory === "All" && !searchQuery ? remainingArticles : filteredNews).map((news, index) => (
+                        <motion.div
+                           key={news.id}
+                           initial={{ opacity: 0, y: 20 }}
+                           whileInView={{ opacity: 1, y: 0 }}
+                           viewport={{ once: true }}
+                           transition={{ delay: index * 0.1 }}
+                           className="group flex flex-col bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 h-full"
+                        >
+                           {/* Image */}
+                           <div className="relative h-56 overflow-hidden bg-slate-100">
                               <img
                                  src={news.image}
                                  alt={news.title}
-                                 className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                                 className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
                               />
                            </div>
-                           <div className="p-6">
-                              <div className="flex items-center justify-between mb-3">
-                                 <Badge variant="secondary">{news.category}</Badge>
-                                 <span className="text-xs text-muted-foreground">{news.date}</span>
+
+                           {/* Content */}
+                           <div className="p-6 flex flex-col flex-grow">
+                              <div className="flex items-center justify-between text-xs text-slate-400 mb-4">
+                                 <span className="inline-block px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 font-medium">
+                                    {news.category}
+                                 </span>
+                                 <div className="flex items-center">
+                                    <Calendar className="w-3 h-3 mr-1" />
+                                    {format(new Date(news.date), "MMM d, yyyy")}
+                                 </div>
                               </div>
-                              <h3 className="font-bold text-xl mb-3 line-clamp-2">{news.title}</h3>
-                              <p className="text-muted-foreground mb-4 line-clamp-3">{news.excerpt}</p>
-                              <div className="flex items-center justify-between mt-6">
-                                 <span className="text-xs text-muted-foreground">By {news.author}</span>
-                                 <Button variant="outline" size="sm">
+
+                              <h3 className="font-bold text-xl text-slate-900 mb-3 leading-snug group-hover:text-sky-700 transition-colors line-clamp-2">
+                                 {news.title}
+                              </h3>
+
+                              <p className="text-slate-600 text-sm line-clamp-3 mb-6 flex-grow">
+                                 {news.excerpt}
+                              </p>
+
+                              <div className="pt-4 border-t border-slate-50 flex items-center justify-between">
+                                 <span className="text-xs font-medium text-slate-500 flex items-center">
+                                    <User className="w-3 h-3 mr-1.5" />
+                                    {news.author}
+                                 </span>
+                                 <span className="text-sky-600 text-xs font-bold uppercase tracking-wide flex items-center group-hover:translate-x-1 transition-transform">
                                     Read More
-                                 </Button>
+                                 </span>
                               </div>
                            </div>
-                        </CardContent>
-                     </Card>
-                  ))}
-               </div>
-
-               {filteredNews.length === 0 && (
-                  <div className="text-center py-12">
-                     <p className="text-muted-foreground">No news articles found matching your search.</p>
-                     <Button
-                        variant="outline"
-                        className="mt-4"
-                        onClick={() => setSearchQuery("")}
-                     >
-                        Clear Search
-                     </Button>
+                        </motion.div>
+                     ))}
                   </div>
-               )}
-            </div>
-         </section>
-         <section className="py-16 md:py-20">
+               </>
+            ) : (
+               <div className="text-center py-20">
+                  <div className="bg-slate-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                     <Search className="w-8 h-8 text-slate-400" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-slate-900 mb-2">No articles found</h3>
+                  <p className="text-slate-500">We couldn't find any news matching your criteria.</p>
+                  <button
+                     onClick={() => { setActiveCategory("All"); setSearchQuery(""); }}
+                     className="text-sky-700 font-medium mt-2 hover:underline"
+                  >
+                     Clear all filters
+                  </button>
+               </div>
+            )}
+         </div>
+
+         {/* Newsletter Section */}
+         <section className="py-20 bg-white border-t border-slate-100">
             <div className="container mx-auto px-4 sm:px-6">
-               <div className="bg-primary rounded-2xl p-8 md:p-12 text-center shadow-xl relative overflow-hidden">
-                  <h2 className="text-2xl font-bold text-white mb-4">Subscribe to Our Newsletter</h2>
-                  <p className="text-white/90 mb-6">
-                     Stay informed about the latest developments, events, and opportunities at Mikrobot Academy.
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                     <Input
-                        placeholder="Your email address"
-                        className="max-w-md bg-white"
-                        type="email"
-                     />
-                     <Button className="bg-white text-primary hover:bg-white/90">Subscribe</Button>
+               <div className="bg-gradient-to-br from-sky-900 to-indigo-900 rounded-3xl p-8 md:p-16 text-center text-white shadow-2xl relative overflow-hidden">
+                  {/* Decorative circles */}
+                  <div className="absolute top-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+                  <div className="absolute bottom-0 right-0 w-80 h-80 bg-sky-500/20 rounded-full blur-3xl translate-x-1/3 translate-y-1/3"></div>
+
+                  <div className="relative z-10 max-w-2xl mx-auto">
+                     <h2 className="text-3xl md:text-4xl font-bold mb-4">Stay in the Loop</h2>
+                     <p className="text-sky-100 mb-8 text-lg">
+                        Join our newsletter to get the latest robotics news, workshop announcements, and student success stories delivered to your inbox.
+                     </p>
+                     <div className="flex flex-col sm:flex-row gap-3">
+                        <input
+                           type="email"
+                           placeholder="Enter your email address"
+                           className="bg-white/10 border border-white/20 text-white placeholder:text-sky-200/70 h-12 px-4 rounded-xl focus:bg-white/20 outline-none w-full transition-all"
+                        />
+                        <button className="h-12 px-8 rounded-xl bg-transparent border border-white/20 backdrop-blur-md hover:bg-white/10 text-white font-semibold shadow-lg shadow-sky-900/50 transition-all hover:scale-105 whitespace-nowrap">
+                           Subscribe
+                        </button>
+                     </div>
+                     <p className="text-xs text-sky-300/60 mt-4">
+                        We respect your privacy. Unsubscribe at any time.
+                     </p>
                   </div>
                </div>
             </div>
          </section>
-      </div>
+      </main>
    );
-};
-
-export default News;
+}

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Rocket, Star, Users, Target, BookOpen, Award } from "lucide-react";
+import { Rocket, Star, Users, Award } from "lucide-react";
 import CTA from "@/components/homepage/cta";
 import Link from "next/link";
 
@@ -30,7 +30,7 @@ const About = () => {
                   src="/about.jpg"
                   alt="About Hero"
                   fill
-                  className="object-cover opacity-30"
+                  className="object-cover opacity-50"
                   priority
                />
                <div className="absolute inset-0 bg-gradient-to-b from-slate-50/0 via-slate-50/50 to-slate-50" />

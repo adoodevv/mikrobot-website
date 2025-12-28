@@ -1,9 +1,29 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Users, Code, Trophy, Sparkles } from "lucide-react";
+"use client";
+
+import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
+import { Check, Trophy, ChevronRight } from "lucide-react";
+import CTA from "@/components/homepage/cta";
+import CountUp from "@/components/ui/count-up";
 
 const AcademyPage = () => {
+   const containerVariants = {
+      hidden: { opacity: 0 },
+      show: {
+         opacity: 1,
+
+         transition: {
+            staggerChildren: 0.2
+         }
+      }
+   };
+
+   const itemVariants = {
+      hidden: { opacity: 0, y: 20 },
+      show: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+   };
+
    const programs = [
       {
          title: "Elementary Program",
@@ -15,10 +35,8 @@ const AcademyPage = () => {
             "Motor skills development",
             "Visual programming blocks"
          ],
-         icon: Sparkles,
-         href: "/academy/elementary",
-         image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e",
-         color: "from-blue-500/10 to-purple-500/10"
+         href: "/programs/elementary",
+         image: "/elementary.jpg"
       },
       {
          title: "Junior Program",
@@ -30,10 +48,8 @@ const AcademyPage = () => {
             "Advanced mechanical assembly",
             "Project planning skills"
          ],
-         icon: Code,
-         href: "/academy/junior",
-         image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158",
-         color: "from-green-500/10 to-blue-500/10"
+         href: "/programs/junior",
+         image: "/junior.jpg"
       },
       {
          title: "Senior Program",
@@ -45,156 +61,184 @@ const AcademyPage = () => {
             "Custom PCB design",
             "Computer vision systems"
          ],
-         icon: Trophy,
-         href: "/academy/senior",
-         image: "https://s5.cdn.ventureburn.com/wp-content/uploads/sites/2/2023/07/Image-1-1.jpg",
-         color: "from-orange-500/10 to-red-500/10"
+         href: "/programs/senior",
+         image: "/senior.jpg"
       }
    ];
 
    const stats = [
-      { number: "500+", label: "Students Enrolled" },
-      { number: "50+", label: "Expert Instructors" },
-      { number: "100+", label: "Projects Completed" },
-      { number: "25+", label: "Competition Wins" }
+      { number: 500, suffix: "+", label: "Students Enrolled" },
+      { number: 14, suffix: "+", label: "Expert Instructors" },
+      { number: 35, suffix: "+", label: "Projects Completed" },
+      { number: 30, suffix: "+", label: "Competition Wins" }
    ];
 
    return (
-      <div className="flex flex-col">
-         <div className="py-28 bg-gray-50">
+      <main className="flex flex-col bg-slate-50 min-h-screen">
+         {/* Hero Section */}
+         <section className="pt-32 pb-20 bg-white">
             <div className="container mx-auto px-4 sm:px-6 text-center">
-               <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-3">
-                  Mikrobot Academy
-               </h1>
-               <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-                  Comprehensive robotics education programs designed to nurture the next generation of innovators, engineers, and problem solvers.
-               </p>
-               <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+               <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                  className="max-w-3xl mx-auto"
+               >
+                  <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-slate-900 mb-6">
+                     Our <span className="text-sky-700">Curriculum</span>
+                  </h1>
+                  <p className="text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto">
+                     Our curriculum is designed to grow with your child, from their first introduction to robotics through advanced technical mastery.
+                  </p>
+               </motion.div>
+            </div>
+         </section>
+
+         {/* Stats Section */}
+         <section className="py-12 bg-white border-b border-slate-100">
+            <div className="container mx-auto px-4 sm:px-6">
+               <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  className="grid grid-cols-2 md:grid-cols-4 max-w-7xl mx-auto divide-y md:divide-y-0 md:divide-x divide-slate-200"
+               >
                   {stats.map((stat, index) => (
-                     <div key={index} className="text-center">
-                        <div className="text-3xl md:text-4xl font-bold text-primary mb-1">{stat.number}</div>
-                        <div className="text-sm text-muted-foreground">{stat.label}</div>
+                     <div key={index} className="py-8 md:py-0 text-center group hover:-translate-y-1 transition-transform duration-300">
+                        <div className="text-5xl font-semibold text-slate-900 tracking-tighter">
+                           <CountUp end={stat.number} suffix={stat.suffix} duration={2.5} />
+                        </div>
+                        <div className="py-2 text-sm font-medium text-slate-500 uppercase tracking-wide">{stat.label}</div>
                      </div>
                   ))}
-               </div>
+               </motion.div>
             </div>
-         </div>
+         </section>
 
-         <section className="py-16">
+         {/* Programs Grid */}
+         <section className="py-24">
             <div className="container mx-auto px-4 sm:px-6">
                <div className="text-center mb-16">
-                  <h2 className="text-3xl font-bold mb-4">Choose Your Program</h2>
-                  <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                  <h2 className="text-3xl font-semibold text-slate-900 mb-4">Choose Your Program</h2>
+                  <p className="text-lg text-slate-600 max-w-2xl mx-auto">
                      Our progressive curriculum is designed to grow with your child, from their first introduction to robotics through advanced technical mastery.
                   </p>
                </div>
 
-               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+               <motion.div
+                  variants={containerVariants}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true }}
+                  className="grid grid-cols-1 lg:grid-cols-3 gap-8"
+               >
                   {programs.map((program, index) => (
-                     <Card key={index} className="border-none shadow-lg hover:shadow-xl transition-all duration-300">
-                        <CardContent className="p-0">
-                           <div className="relative">
-                              <div className={`absolute inset-0 bg-gradient-to-r ${program.color} rounded-t-lg`}></div>
-                              <div className="relative aspect-[4/3] overflow-hidden rounded-t-lg">
-                                 <img
-                                    src={program.image}
-                                    alt={program.title}
-                                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                                 />
-                              </div>
+                     <motion.div
+                        key={index}
+                        variants={itemVariants}
+                        className="group flex flex-col bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300"
+                     >
+                        {/* Image */}
+                        <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
+                           <Image
+                              src={program.image}
+                              alt={program.title}
+                              fill
+                              className="object-cover transition-transform duration-700 group-hover:scale-110"
+                           />
+                           <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        </div>
+
+                        {/* Content */}
+                        <div className="p-8 flex flex-col flex-grow">
+                           <div className="mb-6">
+                              <span className="inline-block px-3 py-1 rounded-full bg-sky-50 text-sky-700 text-xs font-bold uppercase tracking-wider mb-3">
+                                 {program.subtitle}
+                              </span>
+                              <h3 className="text-2xl font-bold text-slate-900 mb-3">{program.title}</h3>
+                              <p className="text-slate-600 leading-relaxed">
+                                 {program.description}
+                              </p>
                            </div>
-                           <div className="p-6">
-                              <div className="flex items-center justify-between mb-4">
-                                 <div>
-                                    <h3 className="text-xl font-bold mb-1">{program.title}</h3>
-                                    <p className="text-sm text-muted-foreground">{program.subtitle}</p>
-                                 </div>
-                              </div>
-                              <p className="text-muted-foreground mb-4">{program.description}</p>
-                              <ul className="space-y-2 mb-6">
-                                 {program.features.map((feature, idx) => (
-                                    <li key={idx} className="flex items-center text-sm">
-                                       <div className="w-1.5 h-1.5 bg-primary rounded-full mr-2"></div>
-                                       {feature}
-                                    </li>
-                                 ))}
-                              </ul>
-                              <Link href={program.href}>
-                                 <Button className="w-full group">
-                                    Explore Program
-                                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                                 </Button>
-                              </Link>
-                           </div>
-                        </CardContent>
-                     </Card>
+
+                           <ul className="space-y-3 mb-8 flex-grow">
+                              {program.features.map((feature, idx) => (
+                                 <li key={idx} className="flex items-start text-sm text-slate-600">
+                                    <Check className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" />
+                                    <span>{feature}</span>
+                                 </li>
+                              ))}
+                           </ul>
+
+                           <Link
+                              href={program.href}
+                              className="inline-flex items-center justify-center w-full px-6 py-3 bg-white border border-slate-200 rounded-md text-slate-900 font-semibold hover:bg-slate-50"
+                           >
+                              Explore Program
+                              <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                           </Link>
+                        </div>
+                     </motion.div>
+                  ))}
+               </motion.div>
+            </div>
+         </section>
+
+         <section className="py-24 bg-white">
+            <div className="container mx-auto px-4 sm:px-6">
+               <div className="text-center mb-16">
+                  <h2 className="text-3xl md:text-4xl font-semibold text-slate-900 mb-4">Competition Opportunities</h2>
+                  <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+                     Challenge yourself on the national and global stage.
+                  </p>
+               </div>
+
+               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  {[
+                     {
+                        label: "National",
+                        title: "RiSE",
+                        desc: "Our teams consistently reach the finals in this prestigious competition that combines engineering excellence with business strategy."
+                     },
+                     {
+                        label: "International",
+                        title: "World Robot Olympiad",
+                        desc: "Students create innovative solutions to global challenges while competing against teams from around the world."
+                     },
+                     {
+                        label: "Collegiate",
+                        title: "University Partnerships",
+                        desc: "Advanced students partner with university research labs to work on cutting-edge projects and competitions."
+                     }
+                  ].map((item, index) => (
+                     <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: index * 0.2 }}
+                        className="group bg-slate-50 rounded-2xl p-8 border border-slate-100"
+                     >
+                        <div className="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-all duration-300 relative z-10">
+                           <Trophy className="h-8 w-8 text-sky-700 group-hover:text-sky-900 transition-colors" />
+                        </div>
+
+                        <div className="text-center mb-4 relative z-10">
+                           <span className="inline-block px-3 py-1 bg-white border border-slate-200 rounded-full text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                              {item.label}
+                           </span>
+                           <h3 className="text-xl font-semibold text-slate-900 mb-3">{item.title}</h3>
+                        </div>
+
+                        <p className="text-slate-600 text-center leading-relaxed relative z-10">
+                           {item.desc}
+                        </p>
+                     </motion.div>
                   ))}
                </div>
             </div>
          </section>
-
-         <section className="py-16 bg-gray-50">
-            <div className="container mx-auto px-4 sm:px-6">
-               <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                  <div>
-                     <h2 className="text-3xl text-center font-bold mb-6">Why Choose Mikrobot Academy?</h2>
-                     <div className="space-y-6">
-                        <div className="flex items-start">
-                           <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                              <Users className="h-6 w-6 text-primary" />
-                           </div>
-                           <div>
-                              <h3 className="font-bold mb-2">Expert Instructors</h3>
-                              <p className="text-muted-foreground">Learn from industry professionals and experienced educators who are passionate about robotics and education.</p>
-                           </div>
-                        </div>
-                        <div className="flex items-start">
-                           <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                              <Code className="h-6 w-6 text-primary" />
-                           </div>
-                           <div>
-                              <h3 className="font-bold mb-2">Hands-on Learning</h3>
-                              <p className="text-muted-foreground">Get your hands on real robotics equipment and work on projects that challenge and inspire you.</p>
-                           </div>
-                        </div>
-                        <div className="flex items-start">
-                           <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                              <Trophy className="h-6 w-6 text-primary" />
-                           </div>
-                           <div>
-                              <h3 className="font-bold mb-2">Competition Ready</h3>
-                              <p className="text-muted-foreground">Participate in local, national, and international robotics competitions to showcase your skills.</p>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <div className="relative">
-                     <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-secondary/5 rounded-2xl transform -rotate-3"></div>
-                     <div className="relative bg-white overflow-hidden rounded-2xl shadow-xl border border-gray-100 p-4 transform rotate-2 transition-transform hover:rotate-0 duration-500">
-                        <img
-                           src="/images/gallery/sumo-usa.png"
-                           alt="Students collaborating on robotics project"
-                           className="w-full h-auto rounded-lg"
-                        />
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </section>
-
-         <section className="py-16">
-            <div className="container mx-auto px-4 sm:px-6 text-center">
-               <h2 className="text-3xl font-bold mb-4">Ready to Start Your Robotics Journey?</h2>
-               <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-                  Join hundreds of students who have discovered their passion for robotics and technology at Mikrobot Academy.
-               </p>
-               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button size="lg">Contact Admissions</Button>
-                  <Button variant="outline" size="lg">Schedule a Visit</Button>
-               </div>
-            </div>
-         </section>
-      </div>
+      </main>
    );
 };
 

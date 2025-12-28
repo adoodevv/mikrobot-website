@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { ChevronRight } from "lucide-react";
+import CountUp from "@/components/ui/count-up";
 
 const Impact = () => {
     return (
@@ -44,7 +45,9 @@ const Impact = () => {
                     >
                         <h3 className="text-xl font-medium text-slate-900">Students trained</h3>
                         <div>
-                            <span className="text-8xl font-semibold text-slate-900 tracking-tighter">500+</span>
+                            <span className="text-8xl font-semibold text-slate-900 tracking-tighter">
+                                <CountUp end={500} suffix="+" duration={2.5} />
+                            </span>
                             <div className="w-full h-px bg-slate-100 my-6" />
                             <p className="text-lg text-slate-600 text-right">
                                 Young minds prepared for technology careers
@@ -78,7 +81,9 @@ const Impact = () => {
                     >
                         <h3 className="text-xl font-medium text-slate-900">Competition wins</h3>
                         <div className="text-right">
-                            <span className="text-8xl font-semibold text-slate-900 tracking-tighter">33</span>
+                            <span className="text-8xl font-semibold text-slate-900 tracking-tighter">
+                                <CountUp end={33} duration={2.5} />
+                            </span>
                             <div className="w-full h-px bg-slate-100 my-6" />
                             <p className="text-sm text-slate-600">
                                 International and national robotics competitions
@@ -96,7 +101,9 @@ const Impact = () => {
                     >
                         <h3 className="text-xl font-medium text-slate-900">Years operating</h3>
                         <div className="text-right">
-                            <span className="text-8xl font-semibold text-slate-900 tracking-tighter">12</span>
+                            <span className="text-8xl font-semibold text-slate-900 tracking-tighter">
+                                <CountUp end={12} duration={2.5} />
+                            </span>
                             <div className="w-full h-px bg-slate-100 my-6" />
                             <p className="text-sm text-slate-600">
                                 Dedicated to excellence in robotics education

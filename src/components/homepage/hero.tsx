@@ -56,7 +56,7 @@ const Hero = () => {
                            className="flex flex-col sm:flex-row justify-center gap-4 pt-4"
                         >
                            <Link href="/programs">
-                              <button className="w-full sm:w-auto rounded-md text-white bg-sky-900 px-8 py-3.5 text-base font-medium shadow-lg hover:bg-sky-800 transition-all duration-300">
+                              <button className="w-full sm:w-auto rounded-md text-white bg-sky-700 px-8 py-3.5 text-base font-medium shadow-lg hover:bg-sky-800 transition-all duration-300">
                                  Explore Programs
                               </button>
                            </Link>

@@ -46,7 +46,7 @@ export function Footer() {
                   <div className="flex items-center gap-4 pt-4">
                      <Link
                         href="/programs"
-                        className="px-8 py-3.5 bg-sky-900 text-white font-medium rounded-md hover:bg-sky-800 transition-colors"
+                        className="px-8 py-3.5 bg-sky-700 text-white font-medium rounded-md hover:bg-sky-800 transition-colors"
                      >
                         Explore
                      </Link>
@@ -114,25 +114,24 @@ export function Footer() {
                </div>
             </div>
 
-            {/* Bottom Section - Copyright & Socials */}
             <div className="pt-8 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-6">
                <p className="text-sm text-slate-500">
                   © {new Date().getFullYear()} Mikrobot Academy. All rights reserved.
                </p>
                <div className="flex items-center gap-6">
-                  <Link href="#" className="hover:scale-105 transition-transform duration-300" aria-label="Facebook">
+                  <Link href="https://www.facebook.com/mikrobotacademy" className="hover:scale-105 transition-transform duration-300" aria-label="Facebook">
                      <RiFacebookFill className="w-6 h-6" />
                   </Link>
-                  <Link href="#" className="hover:scale-105 transition-transform duration-300" aria-label="Instagram">
+                  <Link href="https://www.instagram.com/mikrobotacademy" className="hover:scale-105 transition-transform duration-300" aria-label="Instagram">
                      <RiInstagramFill className="w-6 h-6" />
                   </Link>
-                  <Link href="#" className="hover:scale-105 transition-transform duration-300" aria-label="X (Twitter)">
+                  <Link href="https://x.com/mikrobotacademy" className="hover:scale-105 transition-transform duration-300" aria-label="X (Twitter)">
                      <RiTwitterXFill className="w-6 h-6" />
                   </Link>
-                  <Link href="#" className="hover:scale-105 transition-transform duration-300" aria-label="LinkedIn">
+                  <Link href="https://www.linkedin.com/company/mikrobot-academy/" className="hover:scale-105 transition-transform duration-300" aria-label="LinkedIn">
                      <RiLinkedinFill className="w-6 h-6" />
                   </Link>
-                  <Link href="#" className="hover:scale-105 transition-transform duration-300" aria-label="YouTube">
+                  <Link href="https://www.youtube.com/@mikrobotacademy" className="hover:scale-105 transition-transform duration-300" aria-label="YouTube">
                      <RiYoutubeFill className="w-6 h-6" />
                   </Link>
                </div>

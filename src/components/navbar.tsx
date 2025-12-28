@@ -56,7 +56,7 @@ export function Navbar() {
                      <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className="rounded-md bg-sky-900 text-white px-6 py-3 text-sm font-medium shadow-md hover:bg-sky-800 transition-colors"
+                        className="rounded-md bg-sky-700 text-white px-6 py-3 text-sm font-medium shadow-md hover:bg-sky-800 transition-colors"
                      >
                         Enroll Now
                      </motion.button>
@@ -95,7 +95,7 @@ export function Navbar() {
                         </Link>
                      ))}
                      <Link href="/enroll" onClick={() => setIsMobileMenuOpen(false)} className="mt-4">
-                        <button className="rounded-full bg-sky-900 text-white px-8 py-3 text-lg font-medium shadow-lg w-full">
+                        <button className="rounded-full bg-sky-700 text-white px-8 py-3 text-lg font-medium shadow-lg w-full">
                            Enroll Now
                         </button>
                      </Link>

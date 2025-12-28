@@ -24,7 +24,7 @@ const steps = [
       title: "Build real-world solutions",
       description: "Work directly with mentors who know the field. Build real machines. Solve actual problems. Progress at your own pace while staying challenged.",
       buttons: [
-         { text: "View Curriculum", href: "/curriculum", variant: "outline" },
+         { text: "View Curriculum", href: "/programs", variant: "outline" },
       ],
       image: "/students/afia.jpeg",
    },
