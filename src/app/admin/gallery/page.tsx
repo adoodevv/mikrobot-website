@@ -213,12 +213,26 @@ export default function AdminGallery() {
                 <label className="block text-sm font-medium text-slate-700 mb-2">
                   Image File *
                 </label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleFileChange}
-                  className="w-full h-12 bg-slate-50 border border-slate-200 rounded-lg px-4 text-slate-900 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 focus:outline-none"
-                />
+                <div className="relative">
+                  <input
+                    type="file"
+                    id="gallery-image"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    className="hidden"
+                  />
+                  <label
+                    htmlFor="gallery-image"
+                    className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-slate-300 rounded-lg cursor-pointer bg-slate-50 hover:bg-slate-100 transition-colors"
+                  >
+                    <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                      <ImageIcon className="w-8 h-8 mb-2 text-slate-400" />
+                      <p className="text-sm text-slate-500">
+                        {uploadData.file ? uploadData.file.name : "Select Image"}
+                      </p>
+                    </div>
+                  </label>
+                </div>
               </div>
 
               <div>

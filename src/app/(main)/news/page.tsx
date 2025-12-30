@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
 import { Search, Calendar, User, ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 interface NewsItem {
    id: string;
@@ -119,43 +120,45 @@ export default function NewsPage() {
                         animate={{ opacity: 1, y: 0 }}
                         className="mb-16"
                      >
-                        <div className="group relative bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-xl transition-all duration-300 grid md:grid-cols-2">
-                           {featuredArticle.image && (
-                              <div className="relative h-64 md:h-auto overflow-hidden">
-                                 <img
-                                    src={featuredArticle.image}
-                                    alt={featuredArticle.title}
-                                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-                                 />
-                              </div>
-                           )}
-                           <div className="p-8 md:p-12 flex flex-col justify-center">
-                              <div className="flex items-center gap-3 mb-4">
-                                 <span className="inline-block px-3 py-1 rounded-full bg-sky-50 text-sky-700 text-xs font-bold uppercase tracking-wider">
-                                    {featuredArticle.category}
-                                 </span>
-                                 <div className="flex items-center text-slate-400 text-sm">
-                                    <Calendar className="w-4 h-4 mr-1" />
-                                    {format(new Date(featuredArticle.createdAt), "MMMM d, yyyy")}
+                        <Link href={`/news/${featuredArticle.slug}`}>
+                           <div className="group relative bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-xl transition-all duration-300 grid md:grid-cols-2 cursor-pointer">
+                              {featuredArticle.image && (
+                                 <div className="relative h-64 md:h-auto overflow-hidden">
+                                    <img
+                                       src={featuredArticle.image}
+                                       alt={featuredArticle.title}
+                                       className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                                    />
                                  </div>
-                              </div>
-                              <h2 className="text-3xl md:text-3xl font-bold text-slate-900 mb-4 leading-tight group-hover:text-sky-700 transition-colors">
-                                 {featuredArticle.title}
-                              </h2>
-                              <p className="text-slate-600 text-lg mb-8 line-clamp-3">
-                                 {featuredArticle.excerpt || featuredArticle.content.substring(0, 150) + "..."}
-                              </p>
-                              <div className="flex items-center justify-between mt-auto">
-                                 <div className="flex items-center text-slate-500 text-sm font-medium">
-                                    <User className="w-4 h-4 mr-2" />
-                                    {featuredArticle.author}
+                              )}
+                              <div className="p-8 md:p-12 flex flex-col justify-center">
+                                 <div className="flex items-center gap-3 mb-4">
+                                    <span className="inline-block px-3 py-1 rounded-full bg-sky-50 text-sky-700 text-xs font-bold uppercase tracking-wider">
+                                       {featuredArticle.category}
+                                    </span>
+                                    <div className="flex items-center text-slate-400 text-sm">
+                                       <Calendar className="w-4 h-4 mr-1" />
+                                       {format(new Date(featuredArticle.createdAt), "MMMM d, yyyy")}
+                                    </div>
                                  </div>
-                                 <button className="flex items-center text-sky-700 font-semibold group-hover:translate-x-1 transition-transform">
-                                    Read Article <ArrowRight className="ml-2 w-4 h-4" />
-                                 </button>
+                                 <h2 className="text-3xl md:text-3xl font-bold text-slate-900 mb-4 leading-tight group-hover:text-sky-700 transition-colors">
+                                    {featuredArticle.title}
+                                 </h2>
+                                 <p className="text-slate-600 text-lg mb-8 line-clamp-3">
+                                    {featuredArticle.excerpt || featuredArticle.content.substring(0, 150) + "..."}
+                                 </p>
+                                 <div className="flex items-center justify-between mt-auto">
+                                    <div className="flex items-center text-slate-500 text-sm font-medium">
+                                       <User className="w-4 h-4 mr-2" />
+                                       {featuredArticle.author}
+                                    </div>
+                                    <button className="flex items-center text-sky-700 font-semibold group-hover:translate-x-1 transition-transform">
+                                       Read Article <ArrowRight className="ml-2 w-4 h-4" />
+                                    </button>
+                                 </div>
                               </div>
                            </div>
-                        </div>
+                        </Link>
                      </motion.div>
                   )}
 
@@ -170,47 +173,49 @@ export default function NewsPage() {
                            transition={{ delay: index * 0.1 }}
                            className="group flex flex-col bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 h-full"
                         >
-                           {/* Image */}
-                           {news.image && (
-                              <div className="relative h-56 overflow-hidden bg-slate-100">
-                                 <img
-                                    src={news.image}
-                                    alt={news.title}
-                                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                                 />
-                              </div>
-                           )}
+                           <Link href={`/news/${news.slug}`} className="cursor-pointer h-full flex flex-col">
+                              {/* Image */}
+                              {news.image && (
+                                 <div className="relative h-56 overflow-hidden bg-slate-100">
+                                    <img
+                                       src={news.image}
+                                       alt={news.title}
+                                       className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                                    />
+                                 </div>
+                              )}
 
-                           {/* Content */}
-                           <div className="p-6 flex flex-col flex-grow">
-                              <div className="flex items-center justify-between text-xs text-slate-400 mb-4">
-                                 <span className="inline-block px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 font-medium">
-                                    {news.category}
-                                 </span>
-                                 <div className="flex items-center">
-                                    <Calendar className="w-3 h-3 mr-1" />
-                                    {format(new Date(news.createdAt), "MMM d, yyyy")}
+                              {/* Content */}
+                              <div className="p-6 flex flex-col flex-grow">
+                                 <div className="flex items-center justify-between text-xs text-slate-400 mb-4">
+                                    <span className="inline-block px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 font-medium">
+                                       {news.category}
+                                    </span>
+                                    <div className="flex items-center">
+                                       <Calendar className="w-3 h-3 mr-1" />
+                                       {format(new Date(news.createdAt), "MMM d, yyyy")}
+                                    </div>
+                                 </div>
+
+                                 <h3 className="font-bold text-xl text-slate-900 mb-3 leading-snug group-hover:text-sky-700 transition-colors line-clamp-2">
+                                    {news.title}
+                                 </h3>
+
+                                 <p className="text-slate-600 text-sm line-clamp-3 mb-6 flex-grow">
+                                    {news.excerpt || news.content.substring(0, 150) + "..."}
+                                 </p>
+
+                                 <div className="pt-4 border-t border-slate-50 flex items-center justify-between">
+                                    <span className="text-xs font-medium text-slate-500 flex items-center">
+                                       <User className="w-3 h-3 mr-1.5" />
+                                       {news.author}
+                                    </span>
+                                    <span className="text-sky-600 text-xs font-bold uppercase tracking-wide flex items-center group-hover:translate-x-1 transition-transform">
+                                       Read More
+                                    </span>
                                  </div>
                               </div>
-
-                              <h3 className="font-bold text-xl text-slate-900 mb-3 leading-snug group-hover:text-sky-700 transition-colors line-clamp-2">
-                                 {news.title}
-                              </h3>
-
-                              <p className="text-slate-600 text-sm line-clamp-3 mb-6 flex-grow">
-                                 {news.excerpt || news.content.substring(0, 150) + "..."}
-                              </p>
-
-                              <div className="pt-4 border-t border-slate-50 flex items-center justify-between">
-                                 <span className="text-xs font-medium text-slate-500 flex items-center">
-                                    <User className="w-3 h-3 mr-1.5" />
-                                    {news.author}
-                                 </span>
-                                 <span className="text-sky-600 text-xs font-bold uppercase tracking-wide flex items-center group-hover:translate-x-1 transition-transform">
-                                    Read More
-                                 </span>
-                              </div>
-                           </div>
+                           </Link>
                         </motion.div>
                      ))}
                   </div>

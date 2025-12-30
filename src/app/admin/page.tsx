@@ -127,7 +127,7 @@ export default function AdminDashboard() {
             Create New Post
           </Link>
           <Link
-            href="/admin/gallery/new"
+            href="/admin/gallery"
             className="px-4 py-2 bg-none text-slate-900 border border-slate-200 rounded-lg hover:bg-slate-200 transition-colors"
           >
             Add Gallery Image

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import toast from "react-hot-toast";
 import Image from "next/image";
+import { Image as ImageIcon } from "lucide-react";
 
 export default function EditPost() {
   const router = useRouter();
@@ -230,12 +231,26 @@ export default function EditPost() {
           <label className="block text-sm font-medium text-slate-700 mb-2">
             Featured Image
           </label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageUpload}
-            className="w-full h-12 bg-slate-50 border border-slate-200 rounded-lg px-4 text-slate-900 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 focus:outline-none"
-          />
+          <div className="relative">
+            <input
+              type="file"
+              id="edit-featured-image"
+              accept="image/*"
+              onChange={handleImageUpload}
+              className="hidden"
+            />
+            <label
+              htmlFor="edit-featured-image"
+              className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-slate-300 rounded-lg cursor-pointer bg-slate-50 hover:bg-slate-100 transition-colors"
+            >
+              <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                <ImageIcon className="w-8 h-8 mb-2 text-slate-400" />
+                <p className="text-sm text-slate-500">
+                  {formData.image ? "Change Image" : "Select Image"}
+                </p>
+              </div>
+            </label>
+          </div>
           {formData.image && (
             <div className="mt-4">
               <Image
