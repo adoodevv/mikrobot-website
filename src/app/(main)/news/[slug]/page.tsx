@@ -6,7 +6,9 @@ import { format } from "date-fns";
 import { Metadata } from "next";
 
 // This is a server component
-export default async function BlogPostPage({ params }: { params: { slug: string } }) {
+export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
+    const { slug } = await params;
+
     // In a real app with a DB, we'd fetch by slug. 
     // Since we are likely using a JSON file or simple DB, and I haven't seen an API for slug lookup yet,
     // I might need to fetch all and filter, or update the API.
@@ -24,7 +26,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
     }
 
     const posts: any[] = await response.json();
-    const post = posts.find((p: any) => p.slug === params.slug);
+    const post = posts.find((p: any) => p.slug === slug);
 
     if (!post) {
         return notFound();
