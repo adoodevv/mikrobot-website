@@ -1,69 +1,52 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
 import { Search, Calendar, User, ArrowRight } from "lucide-react";
 
-// --- Data ---
-const newsItems = [
-   {
-      id: 1,
-      title: "Mikrobot Academy Team Wins National Robotics Championship",
-      excerpt: "Our junior team's autonomous rescue robot took first place in the national finals, advancing to the international competition in Singapore.",
-      content: "After months of preparation, the Mikrobot Academy junior team emerged victorious at the National Robotics Championship with their innovative autonomous rescue robot. The win qualifies the team for the International Robotics Olympics in Tokyo this September.",
-      category: "Achievements",
-      date: "2025-05-02",
-      author: "Dr. K. Oteng-Gyasi",
-      readTime: "5 min read",
-      image: "/images/news/national.png"
-   },
-   {
-      id: 2,
-      title: "Summer Robotics Camp Registration Now Open",
-      excerpt: "Secure your child's spot in our popular two-week intensive program designed to spark creativity and technical skills.",
-      content: "Registration is now open for Mikrobot Academy's annual Summer Robotics Camp. Early bird discounts are available until June 1st.",
-      category: "Events",
-      date: "2025-04-15",
-      author: "Elisha Mensah",
-      readTime: "2 min read",
-      image: "/images/news/tarkwa.png"
-   },
-   {
-      id: 3,
-      title: "Alumni Spotlight: Haqq Secures Bloomberg Internship",
-      excerpt: "Former student Haqq shares his experience landing a prestigious software engineering internship at Bloomberg last summer.",
-      content: "We are incredibly proud of Haqq, a Mikrobot Academy alumnus, who spent his last summer interning at Bloomberg. This achievement highlights the global opportunities available to our dedicated students.",
-      category: "Alumni",
-      date: "2025-03-15",
-      author: "N. Munagah",
-      readTime: "4 min read",
-      image: "/people/haqq.jpeg"
-   },
-   {
-      id: 4,
-      title: "Elementary Program Expansion Adds Weekend Sessions",
-      excerpt: "Due to high demand, we're adding Saturday afternoon sessions for our youngest robotics enthusiasts.",
-      content: "In response to growing interest, Mikrobot Academy is expanding its Elementary program to include weekend sessions starting next month.",
-      category: "Programs",
-      date: "2025-02-25",
-      author: "Mr. John Awotwi",
-      readTime: "2 min read",
-      image: "/images/gallery/junior-teamwork.png"
-   }
-];
+interface NewsItem {
+   id: string;
+   title: string;
+   slug: string;
+   excerpt: string | null;
+   content: string;
+   category: string;
+   author: string;
+   readTime: string | null;
+   image: string | null;
+   createdAt: string;
+}
 
 const categories = ["All", "Achievements", "Curriculum", "Events", "Alumni", "Programs"];
 
 export default function NewsPage() {
    const [activeCategory, setActiveCategory] = useState("All");
    const [searchQuery, setSearchQuery] = useState("");
+   const [newsItems, setNewsItems] = useState<NewsItem[]>([]);
+   const [isLoading, setIsLoading] = useState(true);
+
+   useEffect(() => {
+      fetchNews();
+   }, []);
+
+   const fetchNews = async () => {
+      try {
+         const response = await fetch("/api/posts?published=true");
+         const data = await response.json();
+         setNewsItems(data);
+      } catch (error) {
+         console.error("Error fetching news:", error);
+      } finally {
+         setIsLoading(false);
+      }
+   };
 
    // Filter Logic
    const filteredNews = newsItems.filter(item => {
       const matchesCategory = activeCategory === "All" || item.category === activeCategory;
       const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-         item.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
+         (item.excerpt && item.excerpt.toLowerCase().includes(searchQuery.toLowerCase()));
       return matchesCategory && matchesSearch;
    });
 
@@ -123,7 +106,11 @@ export default function NewsPage() {
          </section>
 
          <div className="container mx-auto px-4 sm:px-6 py-16">
-            {filteredNews.length > 0 ? (
+            {isLoading ? (
+               <div className="text-center py-20">
+                  <div className="text-slate-600">Loading news...</div>
+               </div>
+            ) : filteredNews.length > 0 ? (
                <>
                   {/* Featured Article */}
                   {featuredArticle && activeCategory === "All" && !searchQuery && (
@@ -133,13 +120,15 @@ export default function NewsPage() {
                         className="mb-16"
                      >
                         <div className="group relative bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-xl transition-all duration-300 grid md:grid-cols-2">
-                           <div className="relative h-64 md:h-auto overflow-hidden">
-                              <img
-                                 src={featuredArticle.image}
-                                 alt={featuredArticle.title}
-                                 className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-                              />
-                           </div>
+                           {featuredArticle.image && (
+                              <div className="relative h-64 md:h-auto overflow-hidden">
+                                 <img
+                                    src={featuredArticle.image}
+                                    alt={featuredArticle.title}
+                                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                                 />
+                              </div>
+                           )}
                            <div className="p-8 md:p-12 flex flex-col justify-center">
                               <div className="flex items-center gap-3 mb-4">
                                  <span className="inline-block px-3 py-1 rounded-full bg-sky-50 text-sky-700 text-xs font-bold uppercase tracking-wider">
@@ -147,14 +136,14 @@ export default function NewsPage() {
                                  </span>
                                  <div className="flex items-center text-slate-400 text-sm">
                                     <Calendar className="w-4 h-4 mr-1" />
-                                    {format(new Date(featuredArticle.date), "MMMM d, yyyy")}
+                                    {format(new Date(featuredArticle.createdAt), "MMMM d, yyyy")}
                                  </div>
                               </div>
                               <h2 className="text-3xl md:text-3xl font-bold text-slate-900 mb-4 leading-tight group-hover:text-sky-700 transition-colors">
                                  {featuredArticle.title}
                               </h2>
                               <p className="text-slate-600 text-lg mb-8 line-clamp-3">
-                                 {featuredArticle.excerpt}
+                                 {featuredArticle.excerpt || featuredArticle.content.substring(0, 150) + "..."}
                               </p>
                               <div className="flex items-center justify-between mt-auto">
                                  <div className="flex items-center text-slate-500 text-sm font-medium">
@@ -182,13 +171,15 @@ export default function NewsPage() {
                            className="group flex flex-col bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 h-full"
                         >
                            {/* Image */}
-                           <div className="relative h-56 overflow-hidden bg-slate-100">
-                              <img
-                                 src={news.image}
-                                 alt={news.title}
-                                 className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                              />
-                           </div>
+                           {news.image && (
+                              <div className="relative h-56 overflow-hidden bg-slate-100">
+                                 <img
+                                    src={news.image}
+                                    alt={news.title}
+                                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                                 />
+                              </div>
+                           )}
 
                            {/* Content */}
                            <div className="p-6 flex flex-col flex-grow">
@@ -198,7 +189,7 @@ export default function NewsPage() {
                                  </span>
                                  <div className="flex items-center">
                                     <Calendar className="w-3 h-3 mr-1" />
-                                    {format(new Date(news.date), "MMM d, yyyy")}
+                                    {format(new Date(news.createdAt), "MMM d, yyyy")}
                                  </div>
                               </div>
 
@@ -207,7 +198,7 @@ export default function NewsPage() {
                               </h3>
 
                               <p className="text-slate-600 text-sm line-clamp-3 mb-6 flex-grow">
-                                 {news.excerpt}
+                                 {news.excerpt || news.content.substring(0, 150) + "..."}
                               </p>
 
                               <div className="pt-4 border-t border-slate-50 flex items-center justify-between">

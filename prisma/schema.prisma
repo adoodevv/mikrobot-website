@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Post {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  excerpt     String?
+  content     String
+  category    String
+  author      String
+  readTime    String?
+  image       String?
+  published   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([category])
+  @@index([published])
+}
+
+model GalleryImage {
+  id          String   @id @default(cuid())
+  src         String
+  alt         String
+  category    String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([category])
+}
+
+model FormSubmission {
+  id        String   @id @default(cuid())
+  formType  String   // "contact", "enroll", etc.
+  name      String?
+  email     String?
+  subject   String?
+  message   String?
+  age       String?
+  interest  String?
+  data      String?  // Store all form data as JSON string
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([formType])
+  @@index([read])
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String   // Hashed password
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

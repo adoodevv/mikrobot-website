@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function EnrollPage() {
     const router = useRouter();
@@ -18,10 +19,28 @@ export default function EnrollPage() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
-        // Simulate API call
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-        setIsSubmitting(false);
-        setIsSuccess(true);
+
+        try {
+            const response = await fetch("/api/forms", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    formType: "enroll",
+                    ...formState
+                }),
+            });
+
+            if (response.ok) {
+                setIsSuccess(true);
+            } else {
+                const data = await response.json();
+                toast.error(data.error || "Failed to submit application. Please try again.");
+                setIsSubmitting(false);
+            }
+        } catch (error) {
+            toast.error("An error occurred. Please try again later.");
+            setIsSubmitting(false);
+        }
     };
 
     const handleChange = (

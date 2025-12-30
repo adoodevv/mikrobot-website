@@ -2,9 +2,10 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Mail, Phone, MapPin, Send, Clock } from "lucide-react";
+import { Mail, Phone, MapPin} from "lucide-react";
 import CTA from "@/components/homepage/cta";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const ContactPage = () => {
    const [formData, setFormData] = useState({
@@ -13,6 +14,7 @@ const ContactPage = () => {
       subject: "",
       message: "",
    });
+   const [isSubmitting, setIsSubmitting] = useState(false);
 
    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const { name, value } = e.target;
@@ -22,9 +24,37 @@ const ContactPage = () => {
       }));
    };
 
-   const handleSubmit = (e: React.FormEvent) => {
+   const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
-      console.log("Form submitted:", formData);
+      setIsSubmitting(true);
+
+      try {
+         const response = await fetch("/api/forms", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+               formType: "contact",
+               ...formData
+            }),
+         });
+
+         if (response.ok) {
+            toast.success("Message sent successfully! We'll get back to you soon.");
+            setFormData({
+               name: "",
+               email: "",
+               subject: "",
+               message: "",
+            });
+         } else {
+            const data = await response.json();
+            toast.error(data.error || "Failed to send message. Please try again.");
+         }
+      } catch (error) {
+         toast.error("An error occurred. Please try again later.");
+      } finally {
+         setIsSubmitting(false);
+      }
    };
 
    const containerVariants = {
@@ -191,9 +221,10 @@ const ContactPage = () => {
 
                            <button
                               type="submit"
-                              className="w-full h-12 bg-sky-700 hover:bg-sky-800 text-white font-medium text-lg rounded-lg flex items-center justify-center transition-all"
+                              disabled={isSubmitting}
+                              className="w-full h-12 bg-sky-700 hover:bg-sky-800 text-white font-medium text-lg rounded-lg flex items-center justify-center transition-all disabled:opacity-70 disabled:cursor-not-allowed"
                            >
-                              Send Message
+                              {isSubmitting ? "Sending..." : "Send Message"}
                            </button>
                         </form>
                      </div>

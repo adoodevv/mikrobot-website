@@ -1,0 +1,84 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
+
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+  try {
+    const post = await prisma.post.findUnique({
+      where: { id }
+    });
+
+    if (!post) {
+      return NextResponse.json(
+        { error: 'Post not found' },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(post);
+  } catch (error) {
+    console.error('Error fetching post:', error);
+    return NextResponse.json(
+      { error: 'Failed to fetch post' },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+  try {
+    const body = await request.json();
+    const { title, slug, excerpt, content, category, author, readTime, image, published } = body;
+
+    const post = await prisma.post.update({
+      where: { id },
+      data: {
+        ...(title && { title }),
+        ...(slug && { slug }),
+        ...(excerpt !== undefined && { excerpt }),
+        ...(content && { content }),
+        ...(category && { category }),
+        ...(author && { author }),
+        ...(readTime !== undefined && { readTime }),
+        ...(image !== undefined && { image }),
+        ...(published !== undefined && { published })
+      }
+    });
+
+    return NextResponse.json(post);
+  } catch (error: any) {
+    console.error('Error updating post:', error);
+    return NextResponse.json(
+      { error: error.message || 'Failed to update post' },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+  try {
+    await prisma.post.delete({
+      where: { id }
+    });
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('Error deleting post:', error);
+    return NextResponse.json(
+      { error: 'Failed to delete post' },
+      { status: 500 }
+    );
+  }
+}
+
