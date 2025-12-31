@@ -10,6 +10,12 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  // Enable compression
+  compress: true,
+  // Remove X-Powered-By header for security
+  poweredByHeader: false,
+  // Optimize production builds
+  reactStrictMode: true,
 };
 
 export default nextConfig;

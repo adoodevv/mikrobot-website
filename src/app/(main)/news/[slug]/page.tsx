@@ -5,6 +5,48 @@ import { ArrowLeft, Calendar, User, Clock, ChevronRight } from "lucide-react";
 import { format } from "date-fns";
 import { Metadata } from "next";
 
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  
+  const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/posts?published=true`, {
+    cache: 'no-store'
+  });
+
+  if (!response.ok) {
+    return {
+      title: 'Post Not Found',
+    };
+  }
+
+  const posts: any[] = await response.json();
+  const post = posts.find((p: any) => p.slug === slug);
+
+  if (!post) {
+    return {
+      title: 'Post Not Found',
+    };
+  }
+
+  return {
+    title: post.title,
+    description: post.excerpt || post.description || `Read about ${post.title} at Mikrobot Academy`,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt || post.description || `Read about ${post.title} at Mikrobot Academy`,
+      images: post.image ? [post.image] : ['/hero.png'],
+      type: 'article',
+      publishedTime: post.createdAt,
+      authors: [post.author],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt || post.description || `Read about ${post.title} at Mikrobot Academy`,
+      images: post.image ? [post.image] : ['/hero.png'],
+    },
+  };
+}
+
 // This is a server component
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
