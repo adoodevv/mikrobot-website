@@ -15,7 +15,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://mikrobot-website.vercel.app/'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://mikrobotacademy.com/'),
   title: {
     default: "Mikrobot Academy - Building Tomorrow's Innovators Through Robotics",
     template: "%s | Mikrobot Academy"
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: process.env.NEXT_PUBLIC_APP_URL || 'https://mikrobot-website.vercel.app/',
+    url: process.env.NEXT_PUBLIC_APP_URL || 'https://mikrobotacademy.com/',
     siteName: "Mikrobot Academy",
     title: "Mikrobot Academy - Building Tomorrow's Innovators Through Robotics",
     description: "Founded in 2012, Mikrobot Academy empowers the next generation with hands-on robotics education. We bridge the gap between theoretical knowledge and practical application, preparing students ages 6-18 with the technical skills and problem-solving abilities needed for the 21st century.",

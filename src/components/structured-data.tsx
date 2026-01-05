@@ -1,5 +1,5 @@
 export function OrganizationSchema() {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://mikrobot-website.vercel.app/";
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://mikrobotacademy.com/";
 
   const schema = {
     "@context": "https://schema.org",

@@ -40,7 +40,7 @@ export function Navbar() {
                      >
                         {hoveredIndex === index && (
                            <motion.span
-                              className="absolute inset-0 rounded-lg bg-slate-100 -z-10"
+                              className="absolute inset-0 border-b-2 border-sky-700 -z-10"
                               layoutId="navbar-hover"
                               transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                            />
