@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { format } from "date-fns";
 import { Search, Calendar, User, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 interface NewsItem {
    id: string;
@@ -58,7 +59,16 @@ export default function NewsPage() {
       <main className="min-h-screen bg-slate-50">
          {/* Hero Section */}
          <section className="pt-32 pb-16 bg-white border-b border-slate-100">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
+               <div className="absolute md:top-1/3 bottom-18 right-4 md:right-8">
+                  <Image
+                     width={1000}
+                     height={1000}
+                     src="/illustrations/12.png"
+                     alt="rocket illustration"
+                     className="w-22 lg:w-44 right-0 h-auto mx-auto animate-float-item"
+                  />
+               </div>
                <div className="max-w-3xl mx-auto text-center">
                   <motion.div
                      initial={{ opacity: 0, y: 20 }}

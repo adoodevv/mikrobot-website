@@ -60,7 +60,7 @@ const Steps = () => {
                         <div className="flex flex-col items-start space-y-6 max-w-xl">
                            <div className="space-y-2">
                               <span className="text-sm font-semibold text-slate-900">{step.subLabel}</span>
-                              <h2 className="text-4xl md:text-5xl font-normal text-slate-900 leading-tight tracking-tight">
+                              <h2 className="text-4xl md:text-5xl font-medium text-slate-900 leading-tight tracking-tight">
                                  {step.title}
                               </h2>
                            </div>

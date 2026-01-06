@@ -6,7 +6,7 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const formType = searchParams.get('formType');
     const read = searchParams.get('read');
-    
+
     const submissions = await prisma.formSubmission.findMany({
       where: {
         ...(formType ? { formType } : {}),
@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
       },
       orderBy: { createdAt: 'desc' }
     });
-    
+
     return NextResponse.json(submissions);
   } catch (error) {
     console.error('Error fetching form submissions:', error);
@@ -28,13 +28,14 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { formType, name, email, subject, message, age, interest, ...otherData } = body;
-    
+    const { formType, name, email, contact, subject, message, age, interest, ...otherData } = body;
+
     const submission = await prisma.formSubmission.create({
       data: {
         formType,
         name,
         email,
+        contact,
         subject,
         message,
         age,
@@ -42,7 +43,7 @@ export async function POST(request: NextRequest) {
         data: JSON.stringify(otherData)
       }
     });
-    
+
     return NextResponse.json(submission, { status: 201 });
   } catch (error: any) {
     console.error('Error creating form submission:', error);

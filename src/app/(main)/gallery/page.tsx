@@ -12,7 +12,7 @@ interface GalleryImage {
    description: string | null;
 }
 
-const categories = ["All", "Robofest", "Equipment", "Events", "Teamwork", "Education", "Projects"];
+const categories = ["All", "Robofest", "Equipment", "WRO", "Events", "Teamwork", "Education", "Projects"];
 
 export default function GalleryPage() {
    const [activeCategory, setActiveCategory] = useState("All");
@@ -43,9 +43,18 @@ export default function GalleryPage() {
       <main className="flex flex-col bg-slate-50 min-h-screen">
          {/* Hero Section */}
          <section className="pt-32 pb-16 bg-white border-b border-slate-100">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
+               <div className="absolute lg:top-1/4 -top-12 left-4 md:left-8">
+                  <Image
+                     width={1000}
+                     height={1000}
+                     src="/illustrations/10.png"
+                     alt="paper illustration"
+                     className="w-28 md:w-68 right-0 h-auto mx-auto animate-rotate-item"
+                  />
+               </div>
                <div className="max-w-3xl mx-auto text-center">
-                  <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+                  <h1 className="text-4xl md:text-5xl font-medium text-slate-900 mb-6">
                      Our <span className="text-sky-700">Gallery</span>
                   </h1>
                   <p className="text-lg text-slate-600 mb-8 max-w-2xl mx-auto">

@@ -43,7 +43,7 @@ const About = () => {
                   transition={{ duration: 0.8 }}
                   className="max-w-3xl mx-auto space-y-6"
                >
-                  <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-slate-900">
+                  <h1 className="text-4xl md:text-5xl font-medium tracking-tight text-slate-900">
                      Building Tomorrow's <span className="text-sky-700">Innovators</span>
                   </h1>
                   <p className="text-xl text-slate-600 leading-relaxed">
@@ -93,21 +93,30 @@ const About = () => {
                            className="object-cover transform hover:scale-105 transition-transform duration-700"
                         />
                      </div>
-                     <div className="absolute -bottom-8 -left-8 bg-white p-6 rounded-xl shadow-xl border border-slate-100 max-w-[200px] hidden md:block">
-                        <div className="flex items-center space-x-3 mb-2">
-                           <div className="bg-green-100 p-2 rounded-full text-green-600">
-                              <Award className="w-5 h-5" />
-                           </div>
-                           <span className="font-bold text-slate-900 text-3xl">30+</span>
-                        </div>
-                        <p className="text-sm text-slate-500 font-medium">Regional Awards Won</p>
-                     </div>
                   </motion.div>
                </motion.div>
             </div>
          </section>
 
-         <section className="py-20 bg-white">
+         <section className="relative py-20 bg-white">
+            <div className="absolute md:top-1/3 top-16 left-4 md:left-8">
+               <Image
+                  width={1000}
+                  height={1000}
+                  src="/illustrations/1.png"
+                  alt="rocket illustration"
+                  className="w-16 md:w-34 right-0 h-auto mx-auto animate-rotate-item"
+               />
+            </div>
+            <div className="absolute md:bottom-1/5 bottom-12 right-4 md:right-8">
+               <Image
+                  width={1000}
+                  height={1000}
+                  src="/illustrations/22.png"
+                  alt="planet illustration"
+                  className="w-16 md:w-34 right-0 h-auto mx-auto animate-float-item"
+               />
+            </div>
             <div className="container mx-auto px-4 sm:px-6">
                <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -115,7 +124,7 @@ const About = () => {
                   viewport={{ once: true }}
                   className="text-center max-w-3xl mx-auto mb-16"
                >
-                  <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">Our Core Values</h2>
+                  <h2 className="text-3xl md:text-4xl font-medium text-slate-900 mb-6">Our Core Values</h2>
                   <p className="text-lg text-slate-600">
                      These principles guide everything we do, from how we teach to how we interact with our community.
                   </p>
@@ -148,10 +157,7 @@ const About = () => {
                         whileHover={{ y: -5 }}
                         className="bg-slate-50 rounded-2xl p-8 border border-slate-100 hover:shadow-xl transition-all duration-300 group"
                      >
-                        <div className="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                           {value.icon}
-                        </div>
-                        <h3 className="text-2xl font-bold text-slate-900 mb-4">{value.title}</h3>
+                        <h3 className="text-2xl font-medium text-slate-900 mb-4">{value.title}</h3>
                         <p className="text-slate-600 leading-relaxed">
                            {value.desc}
                         </p>

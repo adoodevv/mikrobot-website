@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Star } from "lucide-react";
+import Image from "next/image";
 
 const testimonials = [
     {
@@ -34,7 +34,16 @@ const getInitials = (name: string) => {
 
 const Testimonials = () => {
     return (
-        <section className="py-24 bg-white">
+        <section className="py-24 bg-white relative">
+            <div className="absolute md:top-1/3 top-8 left-4 md:left-8">
+                <Image
+                    width={1000}
+                    height={1000}
+                    src="/illustrations/1.png"
+                    alt="rocket illustration"
+                    className="w-16 md:w-34 right-0 h-auto mx-auto animate-rotate-item"
+                />
+            </div>
             <div className="container mx-auto px-4 sm:px-6">
                 <div className="text-center mb-16 space-y-4">
                     <h2 className="text-4xl md:text-5xl font-medium text-slate-900 tracking-tight">What students say</h2>
@@ -53,12 +62,6 @@ const Testimonials = () => {
                             transition={{ delay: index * 0.1, duration: 0.5 }}
                             className="p-8 rounded-2xl border border-slate-100 bg-white shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col items-start"
                         >
-                            <div className="flex space-x-1 mb-6">
-                                {[...Array(5)].map((_, i) => (
-                                    <Star key={i} className="w-5 h-5 fill-black text-black" />
-                                ))}
-                            </div>
-
                             <p className="text-slate-900 text-lg leading-relaxed mb-8 flex-1">
                                 "{testimonial.quote}"
                             </p>

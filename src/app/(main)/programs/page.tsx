@@ -77,20 +77,29 @@ const AcademyPage = () => {
       <main className="flex flex-col bg-slate-50 min-h-screen">
          {/* Hero Section */}
          <section className="pt-32 pb-20 bg-white">
-            <div className="container mx-auto px-4 sm:px-6 text-center">
+            <div className="container relative mx-auto px-4 sm:px-6 text-center">
                <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6 }}
                   className="max-w-3xl mx-auto"
                >
-                  <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-slate-900 mb-6">
+                  <h1 className="text-4xl md:text-5xl font-medium tracking-tight text-slate-900 mb-6">
                      Our <span className="text-sky-700">Curriculum</span>
                   </h1>
-                  <p className="text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto">
+                  <p className="lg:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto">
                      Our curriculum is designed to grow with your child, from their first introduction to robotics through advanced technical mastery.
                   </p>
                </motion.div>
+               <div className="absolute lg:top-1/3 bottom-12 left-4 md:left-8">
+                  <Image
+                     width={1000}
+                     height={1000}
+                     src="/illustrations/2.png"
+                     alt="paper illustration"
+                     className="w-18 lg:w-38 right-0 h-auto mx-auto rotate-45 md:rotate-0 animate-float-item"
+                  />
+               </div>
             </div>
          </section>
 
@@ -101,11 +110,11 @@ const AcademyPage = () => {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  className="grid grid-cols-2 md:grid-cols-4 max-w-7xl mx-auto divide-y md:divide-y-0 md:divide-x divide-slate-200"
+                  className="grid grid-cols-1 md:grid-cols-4 max-w-7xl mx-auto divide-y md:divide-y-0 md:divide-x divide-slate-200"
                >
                   {stats.map((stat, index) => (
                      <div key={index} className="py-8 md:py-0 text-center group hover:-translate-y-1 transition-transform duration-300">
-                        <div className="text-5xl font-semibold text-slate-900 tracking-tighter">
+                        <div className="text-5xl font-medium text-slate-900">
                            <CountUp end={stat.number} suffix={stat.suffix} duration={2.5} />
                         </div>
                         <div className="py-2 text-sm font-medium text-slate-500 uppercase tracking-wide">{stat.label}</div>
@@ -155,7 +164,7 @@ const AcademyPage = () => {
                               <span className="inline-block px-3 py-1 rounded-full bg-sky-50 text-sky-700 text-xs font-bold uppercase tracking-wider mb-3">
                                  {program.subtitle}
                               </span>
-                              <h3 className="text-2xl font-bold text-slate-900 mb-3">{program.title}</h3>
+                              <h3 className="text-2xl font-semibold text-slate-900 mb-3">{program.title}</h3>
                               <p className="text-slate-600 leading-relaxed">
                                  {program.description}
                               </p>
@@ -172,7 +181,7 @@ const AcademyPage = () => {
 
                            <Link
                               href={program.href}
-                              className="inline-flex items-center justify-center w-full px-6 py-3 bg-white border border-slate-200 rounded-md text-slate-900 font-semibold hover:bg-slate-50"
+                              className="inline-flex items-center justify-center w-full px-6 py-3 bg-white border border-slate-200 rounded-md text-slate-900 hover:bg-slate-50"
                            >
                               Explore Program
                               <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />

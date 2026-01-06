@@ -3,11 +3,48 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 
 const Hero = () => {
    return (
-      <section className="min-h-screen flex items-center py-20 overflow-hidden bg-slate-50">
+      <section className="relative min-h-screen flex items-center py-20 overflow-hidden bg-slate-50">
+         <div className="absolute md:top-1/3 top-16 left-4 md:left-8">
+            <Image
+               width={1000}
+               height={1000}
+               src="/illustrations/1.png"
+               alt="rocket illustration"
+               className="w-16 md:w-34 right-0 h-auto mx-auto animate-rotate-item"
+            />
+         </div>
+         <div className="absolute md:bottom-1/5 bottom-8 right-4 md:right-8">
+            <Image
+               width={1000}
+               height={1000}
+               src="/illustrations/16.png"
+               alt="planet illustration"
+               className="w-34 right-0 h-auto mx-auto animate-rotate-item"
+            />
+         </div>
+         <div className="absolute md:top-1/5 top-12 right-4 md:right-8">
+            <Image
+               width={1000}
+               height={1000}
+               src="/illustrations/22.png"
+               alt="planet illustration"
+               className="w-24 md:w-34 right-0 h-auto mx-auto animate-float-item"
+            />
+         </div>
+         <div className="absolute bottom-8 left-4 md:left-8">
+            <Image
+               width={1000}
+               height={1000}
+               src="/illustrations/13.png"
+               alt="planet illustration"
+               className="w-24 md:w-64 right-0 h-auto mx-auto animate-float-item"
+            />
+         </div>
          <div className="container mx-auto px-4 sm:px-6 relative z-10">
             <motion.div
                initial={{ opacity: 0, scale: 0.95 }}
@@ -45,7 +82,7 @@ const Hero = () => {
                            transition={{ delay: 0.5, duration: 0.8 }}
                            className="text-lg md:text-xl leading-relaxed text-white/90 max-w-3xl mx-auto"
                         >
-                           Mikrobot Academy shapes young minds through hands-on robotics education and mentorship from industry
+                           We shape young minds through hands-on robotics education and mentorship from industry
                            experts. We prepare tomorrow&apos;s innovators with the skills and confidence to lead in technology.
                         </motion.p>
 

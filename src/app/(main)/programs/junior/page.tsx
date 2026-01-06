@@ -28,7 +28,7 @@ const AcademyJunior = () => {
                   <span className="inline-block px-4 py-1.5 rounded-full bg-sky-50 text-sky-700 text-sm font-bold uppercase tracking-wider mb-6">
                      Ages 11-14
                   </span>
-                  <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-slate-900 mb-6">
+                  <h1 className="text-4xl md:text-5xl font-medium tracking-tight text-slate-900 mb-6">
                      Junior <span className="text-sky-700">Program</span>
                   </h1>
                   <p className="text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto">

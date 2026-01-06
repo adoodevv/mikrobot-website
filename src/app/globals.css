@@ -174,3 +174,35 @@ body {
 .animation-delay-4000 {
   animation-delay: 4s;
 }
+
+@keyframes floatitem {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.animate-float-item {
+  animation: floatitem 5s ease-in-out infinite;
+}
+
+@keyframes rotateitem {
+
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(8deg);
+  }
+}
+
+.animate-rotate-item {
+  animation: rotateitem 5s ease-in-out infinite;
+}

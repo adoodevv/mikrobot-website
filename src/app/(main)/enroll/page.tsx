@@ -11,6 +11,7 @@ export default function EnrollPage() {
         name: "",
         email: "",
         age: "",
+        contact: "",
         interest: "",
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -104,7 +105,7 @@ export default function EnrollPage() {
             <div className="w-full lg:w-1/2 flex items-center justify-center p-6 py-20 lg:p-12 bg-white">
                 <div className="max-w-lg w-full space-y-8">
                     <div className="space-y-4 text-center lg:text-left">
-                        <h1 className="text-4xl lg:text-5xl font-bold text-slate-900 tracking-tight">
+                        <h1 className="text-4xl md:text-5xl font-medium text-slate-900 tracking-tight">
                             Join Mikrobot
                         </h1>
                         <p className="text-lg text-slate-600">
@@ -173,6 +174,25 @@ export default function EnrollPage() {
                                     className="w-full h-12 bg-slate-50 border border-slate-200 rounded-lg px-4 text-slate-900 placeholder:text-slate-400 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 focus:outline-none transition-all"
                                 />
                             </div>
+                        </div>
+
+                        <div className="space-y-2">
+                            <label
+                                htmlFor="contact"
+                                className="text-sm font-medium text-slate-700"
+                            >
+                                Contact Number
+                            </label>
+                            <input
+                                id="contact"
+                                name="contact"
+                                type="tel"
+                                required
+                                value={formState.contact}
+                                onChange={handleChange}
+                                placeholder="+1 (555) 000-0000"
+                                className="w-full h-12 bg-slate-50 border border-slate-200 rounded-lg px-4 text-slate-900 placeholder:text-slate-400 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 focus:outline-none transition-all"
+                            />
                         </div>
 
                         <div className="space-y-2">

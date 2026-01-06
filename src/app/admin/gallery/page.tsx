@@ -19,6 +19,7 @@ export default function AdminGallery() {
   const [images, setImages] = useState<GalleryImage[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showUploadModal, setShowUploadModal] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   const [uploadData, setUploadData] = useState({
     file: null as File | null,
     alt: "",
@@ -56,6 +57,7 @@ export default function AdminGallery() {
     }
 
     try {
+      setIsUploading(true);
       // First upload the file
       const formData = new FormData();
       formData.append("file", uploadData.file);
@@ -99,6 +101,8 @@ export default function AdminGallery() {
       }
     } catch (error) {
       toast.error("An error occurred");
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -268,6 +272,7 @@ export default function AdminGallery() {
                   <option value="Teamwork">Teamwork</option>
                   <option value="Education">Education</option>
                   <option value="Projects">Projects</option>
+                  <option value="WRO">WRO</option>
                 </select>
               </div>
 
@@ -289,9 +294,10 @@ export default function AdminGallery() {
             <div className="flex gap-4 mt-6">
               <button
                 onClick={handleUpload}
-                className="flex-1 px-4 py-2 bg-sky-700 text-white rounded-lg hover:bg-sky-800 transition-colors"
+                disabled={isUploading}
+                className="flex-1 px-4 py-2 bg-sky-700 text-white rounded-lg hover:bg-sky-800 transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                Upload
+                {isUploading ? "Uploading..." : "Upload"}
               </button>
               <button
                 onClick={() => {

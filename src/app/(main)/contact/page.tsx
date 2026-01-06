@@ -114,7 +114,7 @@ const ContactPage = () => {
                   transition={{ duration: 0.8 }}
                   className="max-w-3xl mx-auto space-y-6"
                >
-                  <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-slate-900">
+                  <h1 className="text-4xl md:text-5xl font-medium tracking-tight text-slate-900">
                      Get in <span className="text-sky-700">Touch</span>
                   </h1>
                   <p className="text-xl text-slate-600 leading-relaxed">

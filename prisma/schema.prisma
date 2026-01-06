@@ -49,6 +49,7 @@ model FormSubmission {
   message   String?
   age       String?
   interest  String?
+  contact   String?
   data      String?  // Store all form data as JSON string
   read      Boolean  @default(false)
   createdAt DateTime @default(now())
