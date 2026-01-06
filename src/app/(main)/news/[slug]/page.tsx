@@ -1,74 +1,53 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, Calendar, User, Clock, ChevronRight } from "lucide-react";
+import { ArrowLeft, Calendar, User, Clock } from "lucide-react";
 import { format } from "date-fns";
 import { Metadata } from "next";
+import { prisma } from "@/lib/prisma";
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-  const { slug } = await params;
-  
-  const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/posts?published=true`, {
-    cache: 'no-store'
-  });
+    const { slug } = await params;
 
-  if (!response.ok) {
+    const post = await prisma.post.findUnique({
+        where: { slug }
+    });
+
+    if (!post) {
+        return {
+            title: 'Post Not Found',
+        };
+    }
+
     return {
-      title: 'Post Not Found',
+        title: post.title,
+        description: post.excerpt || `Read about ${post.title} at Mikrobot Academy`,
+        openGraph: {
+            title: post.title,
+            description: post.excerpt || `Read about ${post.title} at Mikrobot Academy`,
+            images: post.image ? [post.image] : ['/hero.png'],
+            type: 'article',
+            publishedTime: post.createdAt.toISOString(),
+            authors: [post.author],
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: post.title,
+            description: post.excerpt || `Read about ${post.title} at Mikrobot Academy`,
+            images: post.image ? [post.image] : ['/hero.png'],
+        },
     };
-  }
-
-  const posts: any[] = await response.json();
-  const post = posts.find((p: any) => p.slug === slug);
-
-  if (!post) {
-    return {
-      title: 'Post Not Found',
-    };
-  }
-
-  return {
-    title: post.title,
-    description: post.excerpt || post.description || `Read about ${post.title} at Mikrobot Academy`,
-    openGraph: {
-      title: post.title,
-      description: post.excerpt || post.description || `Read about ${post.title} at Mikrobot Academy`,
-      images: post.image ? [post.image] : ['/hero.png'],
-      type: 'article',
-      publishedTime: post.createdAt,
-      authors: [post.author],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: post.title,
-      description: post.excerpt || post.description || `Read about ${post.title} at Mikrobot Academy`,
-      images: post.image ? [post.image] : ['/hero.png'],
-    },
-  };
 }
 
 // This is a server component
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
 
-    // In a real app with a DB, we'd fetch by slug. 
-    // Since we are likely using a JSON file or simple DB, and I haven't seen an API for slug lookup yet,
-    // I might need to fetch all and filter, or update the API.
-    // For this step, I'll assume we can fetch the list and find the item, 
-    // OR call an API endpoint that supports slug.
-
-    // Let's try to fetch all posts and find the one with the matching slug.
-    // This is not efficient for large datasets but works for small JSON backends.
-    const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/posts?published=true`, {
-        cache: 'no-store'
+    const post = await prisma.post.findUnique({
+        where: { slug }
     });
-
-    if (!response.ok) {
-        return notFound();
-    }
-
-    const posts: any[] = await response.json();
-    const post = posts.find((p: any) => p.slug === slug);
 
     if (!post) {
         return notFound();
@@ -119,7 +98,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                                     </div>
                                     <div className="flex items-center">
                                         <Calendar className="w-5 h-5 mr-2 text-sky-400" />
-                                        <span>{format(new Date(post.createdAt), "MMMM d, yyyy")}</span>
+                                        <span>{format(post.createdAt, "MMMM d, yyyy")}</span>
                                     </div>
                                     {post.readTime && (
                                         <div className="flex items-center">
@@ -146,15 +125,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
                     {/* Main Content */}
                     <div className="prose prose-lg md:prose-xl prose-slate max-w-none 
-              prose-headings:text-slate-900 prose-headings:font-bold
-              prose-p:text-slate-600 prose-p:leading-relaxed
-              prose-a:text-sky-700 prose-a:no-underline hover:prose-a:underline
-              prose-img:rounded-xl prose-img:shadow-lg
-              prose-blockquote:border-l-sky-500 prose-blockquote:bg-slate-50 prose-blockquote:py-2 prose-blockquote:px-6 prose-blockquote:not-italic
-              prose-li:marker:text-sky-500">
-                        {post.content.split('\n').map((paragraph: string, index: number) => (
-                            paragraph.trim() && <p key={index}>{paragraph}</p>
-                        ))}
+                        prose-headings:text-slate-900 prose-headings:font-bold
+                        prose-p:text-slate-600 prose-p:leading-relaxed
+                        prose-a:text-sky-700 prose-a:no-underline hover:prose-a:underline
+                        prose-img:rounded-xl prose-img:shadow-lg
+                        prose-blockquote:border-l-sky-500 prose-blockquote:bg-slate-50 prose-blockquote:py-2 prose-blockquote:px-6 prose-blockquote:not-italic
+                        prose-li:marker:text-sky-500">
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                            {post.content}
+                        </ReactMarkdown>
                     </div>
 
                     {/* Share/Navigation Footer */}

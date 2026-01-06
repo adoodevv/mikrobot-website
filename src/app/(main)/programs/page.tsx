@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { Check, Trophy, ChevronRight } from "lucide-react";
-import CTA from "@/components/homepage/cta";
 import CountUp from "@/components/ui/count-up";
+import WROLearnFAB from "@/components/wro-learn-fab";
 
 const AcademyPage = () => {
    const containerVariants = {
@@ -247,6 +247,7 @@ const AcademyPage = () => {
                </div>
             </div>
          </section>
+         <WROLearnFAB />
       </main>
    );
 };
