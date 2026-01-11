@@ -52,7 +52,7 @@ export function Footer() {
                      </Link>
                      <Link
                         href="/contact"
-                        className="px-8 py-3.5 bg-white/50 backdrop-blur-md border border-slate-200 text-slate-900 rounded-md hover:bg-white transition-colors duration-300"
+                        className="px-8 py-3.5 bg-white border border-slate-200 text-slate-900 rounded-md hover:bg-slate-50 transition-colors duration-300"
                      >
                         Contact
                      </Link>
@@ -90,8 +90,8 @@ export function Footer() {
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-8 mb-12">
                {/* Logo Placeholder */}
                <div className="relative">
-                  <Link href="/" className="flex items-center gap-2 z-50 relative">
-                     <Image src="/logo.png" alt="Mikrobot Academy Logo" width={60} height={60} />
+                  <Link href="/" className="flex items-center gap-2 z-50 relative" aria-label="Home">
+                     <Image src="/logo.png" alt="Mikrobot Academy" width={60} height={60} />
                      <h1 className="text-xl text-slate-800">Mikrobot Academy</h1>
                   </Link>
                </div>

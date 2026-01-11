@@ -37,7 +37,7 @@ const programs = [
 
 const Programs = () => {
    return (
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-slate-50">
          <div className="container mx-auto px-4 sm:px-6">
             <div className="text-center mb-16 space-y-4">
                <h3 className="text-sm font-semibold tracking-wider uppercase">Programs</h3>
