@@ -56,6 +56,12 @@ const partners = [
         link: "https://wro-association.org/",
         tier: "Silver"
     },
+    {
+        name: "Ghana AI Research Network",
+        logo: "/partners/gain.png",
+        link: "https://ghanaai.org/",
+        tier: "Silver"
+    },
 ];
 
 function Partners() {
